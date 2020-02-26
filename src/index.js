@@ -14,17 +14,27 @@ document.body.append(renderer.domElement)
 
 ///////////////////////////////////////////////////////
 
-var floorGeometry = new THREE.BoxGeometry(4000, 1, 4000)
-var floorMaterial = new THREE.MeshPhongMaterial( { map: texLoader.load('dist/images/grass.jpg'), shininess: 30 } );
+var floorGeometry = new THREE.BoxGeometry(6000, 1, 4000)
+
+var floorTexture = texLoader.load('dist/images/grass.jpg')
+floorTexture.repeat.set(40, 40)
+floorTexture.wrapS = THREE.RepeatWrapping
+floorTexture.wrapT = THREE.RepeatWrapping
+
+var floorMaterial = new THREE.MeshPhongMaterial( { 
+    map: floorTexture,
+    shininess: 30
+})
+
 var floor = new THREE.Mesh( floorGeometry, floorMaterial )
 scene.add(floor)
 
 ///////////////////////////////////////////////////////
 
-var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 )
+var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 2 )
 scene.add( light )
 
-var directionalLight = new THREE.DirectionalLight( 0x000000, 1.5 )
+var directionalLight = new THREE.DirectionalLight( 0x000000, 3 )
 scene.add( directionalLight )
 
 
@@ -34,10 +44,10 @@ var myCar
 
 var loader = new THREE.GLTFLoader()
 
-loader.load( 'dist/models/car/scene.gltf', function(gltf){
+loader.load( 'dist/models/tank/scene.gltf', function(gltf){
     scene.add(gltf.scene)
     myCar = gltf.scene
-    addControles(myCar)
+    addControles()
     setPosition(myCar)
     animate()
 }, undefined, function(error){
@@ -50,7 +60,7 @@ var arrowBack = false
 var arrowRight = false
 var arrowLeft = false
 
-function addControles(object) {
+function addControles() {
     document.addEventListener('keydown', event => {
         event.preventDefault()
         if(event.keyCode === 38) {
@@ -85,10 +95,10 @@ function addControles(object) {
 
 function setPosition(object) {
     object.position.z = -1000
-    object.position.y = -200
-    object.scale.x = 0.2
-    object.scale.y = 0.2
-    object.scale.z = 0.2
+    object.position.y = -202
+    object.scale.x = 25
+    object.scale.y = 25
+    object.scale.z = 25
 
     floor.position.z = -1000
     floor.position.y = -200
@@ -96,8 +106,8 @@ function setPosition(object) {
 
 ///////////////////////////////////////////////////////
 
-var acceleration = 2
-var friction = 0.9
+var acceleration = 1.5
+var friction = 0.85
 var turnSpeed = 0.1
 var xVelocity = 0
 var zVelocity = 0
