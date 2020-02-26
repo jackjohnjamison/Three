@@ -63,32 +63,36 @@ var arrowLeft = false
 function addControles() {
     document.addEventListener('keydown', event => {
         event.preventDefault()
-        if(event.keyCode === 38) {
-            arrowFoward = true
-        }
-        if(event.keyCode === 40) {
-            arrowBack = true
-        }
-        if(event.keyCode === 37) {
-            arrowRight = true
-        }
-        if(event.keyCode === 39) {
-            arrowLeft = true
+        switch(event.keyCode) {
+            case 38:
+                arrowFoward = true
+                break
+            case 40:
+                arrowBack = true
+                break
+            case  37:
+                arrowRight = true
+                break
+            case  39:
+                arrowLeft = true
+                break
         }
     })
 
     document.addEventListener("keyup", event => {
-        if (event.keyCode === 38) {
-            arrowFoward = false
-        }
-        if (event.keyCode === 40) {
-            arrowBack = false
-        }
-        if(event.keyCode === 37) {
-            arrowRight = false
-        }
-        if(event.keyCode === 39) {
-            arrowLeft = false
+        switch(event.keyCode) {
+            case 38:
+                arrowFoward = false
+                break
+            case 40:
+                arrowBack = false
+                break
+            case  37:
+                arrowRight = false
+                break
+            case  39:
+                arrowLeft = false
+                break
         }
     })
 }
