@@ -81,11 +81,8 @@ var arrowLeft = function(){return checkKey(65)}
 
 function addControles() {
     document.addEventListener('keydown', event => {
-        event.preventDefault()
-        switch(event.keyCode) {
-            case  13:
-                pointerLock()
-                break
+        if (event.keyCode === 13) {
+            pointerLock()
         }
     })
 }
