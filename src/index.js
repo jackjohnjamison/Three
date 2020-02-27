@@ -54,38 +54,63 @@ function addControles() {
     document.addEventListener('keydown', event => {
         event.preventDefault()
         switch(event.keyCode) {
-            case 38:
+            case 87:
                 arrowFoward = true
                 break
-            case 40:
+            case 83:
                 arrowBack = true
                 break
-            case  37:
+            case  68:
                 arrowRight = true
                 break
-            case  39:
+            case  65:
                 arrowLeft = true
+                break
+            case  13:
+                pointerLock()
                 break
         }
     })
 
     document.addEventListener("keyup", event => {
         switch(event.keyCode) {
-            case 38:
+            case 87:
                 arrowFoward = false
                 break
-            case 40:
+            case 83:
                 arrowBack = false
                 break
-            case  37:
+            case  68:
                 arrowRight = false
                 break
-            case  39:
+            case  65:
                 arrowLeft = false
                 break
         }
     })
 }
+
+document.body.requestPointerLock = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
+
+var movementX = 0
+// var movementY = 0
+var timeStamp = 0
+timeStampPrev = 0
+var pointerLocked = false
+
+
+function pointerLock() {
+    document.body.requestPointerLock()
+    document.addEventListener('mousemove', event => {
+        movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0
+        // movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
+        timeStamp = event.timeStamp
+        console.log(event)
+    })
+    pointerLocked = true
+}
+
+///////////////////////////////////////////////////////////////////
 
 function setPosition(object) {
     object.position.z = -1000
@@ -102,23 +127,38 @@ function setPosition(object) {
 
 var acceleration = 2
 var friction = 0.9
-var turnSpeed = 0.1
 var xVelocity = 0
 var zVelocity = 0
+var lookSensitivity = 0.02
+
+function degrees_to_radians(degrees) {
+  var pi = Math.PI;
+  return degrees * (pi/180);
+}
+
+var quaterTurn = degrees_to_radians(90)
 
 var animate = function() {
 
-    zVelocity += (acceleration * Math.cos(myCar.rotation.y)) * arrowFoward
-    zVelocity -= (acceleration * Math.cos(myCar.rotation.y)) * arrowBack
+    zVelocity -= (acceleration * Math.cos(camera.rotation.y)) * arrowFoward
+    zVelocity += (acceleration * Math.cos(camera.rotation.y)) * arrowBack
     
-    xVelocity += (acceleration * Math.sin(myCar.rotation.y)) * arrowFoward
-    xVelocity -= (acceleration * Math.sin(myCar.rotation.y)) * arrowBack
+    xVelocity -= (acceleration * Math.sin(camera.rotation.y)) * arrowFoward
+    xVelocity += (acceleration * Math.sin(camera.rotation.y)) * arrowBack
 
-    myCar.position.z += zVelocity
-    myCar.position.x += xVelocity
+    zVelocity -= (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowLeft
+    zVelocity += (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowRight
 
-    myCar.rotation.y += turnSpeed * arrowRight
-    myCar.rotation.y -= turnSpeed * arrowLeft
+    xVelocity -= (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowLeft
+    xVelocity += (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowRight
+
+    camera.position.z += zVelocity
+    camera.position.x += xVelocity
+
+    if(pointerLocked && timeStamp !== timeStampPrev) {
+        camera.rotation.y -= movementX * lookSensitivity
+    }
+    timeStampPrev = timeStamp
    
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
