@@ -1,6 +1,7 @@
 var THREE = window.THREE = require('three')
 require('three/examples/js/loaders/GLTFLoader')
 
+///////////////////////////////////////////////////////
 
 var scene = new THREE.Scene()
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 4000)
@@ -45,46 +46,44 @@ loader.load( 'dist/models/car/scene.gltf', function(gltf){
 })
 
 ///////////////////////////////////////////////////////
-var arrowFoward = false
-var arrowBack = false
-var arrowRight = false
-var arrowLeft = false
+
+var pressedKeys = {}
+
+function initCheckKeys(key) {
+    document.addEventListener('keydown', event => {
+        event.preventDefault()
+        pressedKeys[event.keyCode] = true
+    })
+    document.addEventListener("keyup", event => {
+        pressedKeys[event.keyCode] = false
+    })
+}
+
+initCheckKeys()
+
+function checkKey(keyCode) {
+    if(!pressedKeys[keyCode]) {
+        return false
+    } else {
+        return true
+    }
+}
+
+
+
+///////////////////////////////////////////////////////
+
+var arrowFoward =  function(){return checkKey(87)}
+var arrowBack = function(){return checkKey(83)}
+var arrowRight = function(){return checkKey(68)}
+var arrowLeft = function(){return checkKey(65)}
 
 function addControles() {
     document.addEventListener('keydown', event => {
         event.preventDefault()
         switch(event.keyCode) {
-            case 87:
-                arrowFoward = true
-                break
-            case 83:
-                arrowBack = true
-                break
-            case  68:
-                arrowRight = true
-                break
-            case  65:
-                arrowLeft = true
-                break
             case  13:
                 pointerLock()
-                break
-        }
-    })
-
-    document.addEventListener("keyup", event => {
-        switch(event.keyCode) {
-            case 87:
-                arrowFoward = false
-                break
-            case 83:
-                arrowBack = false
-                break
-            case  68:
-                arrowRight = false
-                break
-            case  65:
-                arrowLeft = false
                 break
         }
     })
@@ -105,10 +104,13 @@ function pointerLock() {
         movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0
         // movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
         timeStamp = event.timeStamp
-        console.log(event)
     })
     pointerLocked = true
 }
+
+document.addEventListener('pointerlockchange', event => {
+    console.log(event)
+})
 
 ///////////////////////////////////////////////////////////////////
 
@@ -140,17 +142,17 @@ var quaterTurn = degrees_to_radians(90)
 
 var animate = function() {
 
-    zVelocity -= (acceleration * Math.cos(camera.rotation.y)) * arrowFoward
-    zVelocity += (acceleration * Math.cos(camera.rotation.y)) * arrowBack
+    zVelocity -= (acceleration * Math.cos(camera.rotation.y)) * arrowFoward()
+    zVelocity += (acceleration * Math.cos(camera.rotation.y)) * arrowBack()
     
-    xVelocity -= (acceleration * Math.sin(camera.rotation.y)) * arrowFoward
-    xVelocity += (acceleration * Math.sin(camera.rotation.y)) * arrowBack
+    xVelocity -= (acceleration * Math.sin(camera.rotation.y)) * arrowFoward()
+    xVelocity += (acceleration * Math.sin(camera.rotation.y)) * arrowBack()
 
-    zVelocity -= (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowLeft
-    zVelocity += (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowRight
+    zVelocity -= (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowLeft()
+    zVelocity += (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowRight()
 
-    xVelocity -= (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowLeft
-    xVelocity += (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowRight
+    xVelocity -= (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowLeft()
+    xVelocity += (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowRight()
 
     camera.position.z += zVelocity
     camera.position.x += xVelocity
@@ -159,7 +161,7 @@ var animate = function() {
         camera.rotation.y -= movementX * lookSensitivity
     }
     timeStampPrev = timeStamp
-   
+
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
     
