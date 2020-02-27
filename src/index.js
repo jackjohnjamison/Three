@@ -49,6 +49,12 @@ loader.load( 'dist/models/car/scene.gltf', function(gltf){
 
 var pressedKeys = {}
 
+totalKeys = 230
+
+for (var i = 0; i < totalKeys; i++) {
+    pressedKeys[i] = false
+}
+
 function initCheckKeys(key) {
     document.addEventListener('keydown', event => {
         event.preventDefault()
@@ -62,11 +68,7 @@ function initCheckKeys(key) {
 initCheckKeys()
 
 function checkKey(keyCode) {
-    if(!pressedKeys[keyCode]) {
-        return false
-    } else {
-        return true
-    }
+    return pressedKeys[keyCode]
 }
 
 
