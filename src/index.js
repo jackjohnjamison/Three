@@ -47,6 +47,11 @@ var loader = new THREE.GLTFLoader()
 loader.load( 'dist/models/tank/scene.gltf', function(gltf){
     scene.add(gltf.scene)
     myCar = gltf.scene
+    myCar.add(camera)
+    camera.position.y += 7
+    camera.position.z -= 7
+    camera.rotation.y += 3.14159
+    camera.rotation.x += .5
     addControles()
     setPosition(myCar)
     animate()
