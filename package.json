@@ -1,21 +1,22 @@
 {
-  "name": "threejs",
-  "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "http-server": "^0.12.1",
-    "three": "^0.113.2"
-  },
-  "devDependencies": {
-    "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
-  },
-  "author": "",
-  "license": "ISC",
-  "keywords": [],
-  "description": ""
+	"name": "threejs",
+	"version": "1.0.0",
+	"main": "index.js",
+	"dependencies": {
+		"http-server": "^0.12.1",
+		"three": "^0.113.2"
+	},
+	"devDependencies": {
+		"webpack": "^4.41.6",
+		"webpack-cli": "^3.3.11"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "webpack --watch",
+		"build": "webpack"
+	},
+	"author": "",
+	"license": "ISC",
+	"keywords": [],
+	"description": ""
 }
