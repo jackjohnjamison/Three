@@ -4,7 +4,20 @@ require('three/examples/js/loaders/GLTFLoader')
 ///////////////////////////////////////////////////////
 
 var scene = new THREE.Scene()
+
+///////////////////////////////////////////////////////
+
+player = new THREE.Object3D()
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 4000)
+
+player.add(camera)
+scene.add(player)
+
+
+///////////////////////////////////////////////////////
+
+
+
 
 var renderer = new THREE.WebGLRenderer({antialias: true})
 const texLoader = new THREE.TextureLoader();
@@ -35,8 +48,8 @@ var myCar
 
 var loader = new THREE.GLTFLoader()
 
-loader.load( 'dist/models/car/scene.gltf', function(gltf){
-    scene.add(gltf.scene)
+loader.load( 'dist/models/gun/scene.gltf', function(gltf){
+    player.add(gltf.scene)
     myCar = gltf.scene
     addControles(myCar)
     setPosition(myCar)
@@ -113,11 +126,13 @@ document.addEventListener('pointerlockchange', event => {
 ///////////////////////////////////////////////////////////////////
 
 function setPosition(object) {
-    object.position.z = -1000
-    object.position.y = -200
-    object.scale.x = 0.2
-    object.scale.y = 0.2
-    object.scale.z = 0.2
+    object.position.z = -8
+    object.position.y = -2
+    object.position.x = 3
+    object.scale.x = 0.3
+    object.scale.y = 0.3
+    object.scale.z = 0.3
+    object.rotation.y = 1.5708
 
     floor.position.z = -1000
     floor.position.y = -200
@@ -140,23 +155,23 @@ var quaterTurn = degrees_to_radians(90)
 
 var animate = function() {
 
-    zVelocity -= (acceleration * Math.cos(camera.rotation.y)) * arrowFoward()
-    zVelocity += (acceleration * Math.cos(camera.rotation.y)) * arrowBack()
+    zVelocity -= (acceleration * Math.cos(player.rotation.y)) * arrowFoward()
+    zVelocity += (acceleration * Math.cos(player.rotation.y)) * arrowBack()
     
-    xVelocity -= (acceleration * Math.sin(camera.rotation.y)) * arrowFoward()
-    xVelocity += (acceleration * Math.sin(camera.rotation.y)) * arrowBack()
+    xVelocity -= (acceleration * Math.sin(player.rotation.y)) * arrowFoward()
+    xVelocity += (acceleration * Math.sin(player.rotation.y)) * arrowBack()
 
-    zVelocity -= (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowLeft()
-    zVelocity += (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowRight()
+    zVelocity -= (acceleration * Math.cos(player.rotation.y + quaterTurn)) * arrowLeft()
+    zVelocity += (acceleration * Math.cos(player.rotation.y + quaterTurn)) * arrowRight()
 
-    xVelocity -= (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowLeft()
-    xVelocity += (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowRight()
+    xVelocity -= (acceleration * Math.sin(player.rotation.y + quaterTurn)) * arrowLeft()
+    xVelocity += (acceleration * Math.sin(player.rotation.y + quaterTurn)) * arrowRight()
 
-    camera.position.z += zVelocity
-    camera.position.x += xVelocity
+    player.position.z += zVelocity
+    player.position.x += xVelocity
 
     if(pointerLocked && timeStamp !== timeStampPrev) {
-        camera.rotation.y -= movementX * lookSensitivity
+        player.rotation.y -= movementX * lookSensitivity
     }
     timeStampPrev = timeStamp
 
