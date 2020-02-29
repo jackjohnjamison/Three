@@ -5,46 +5,35 @@
 var THREE = window.THREE = require('three')
 require('three/examples/js/loaders/GLTFLoader')
 
+import { configs } from './includes/configs.js'
 import { KEYCHECK } from './includes/key-check.js'
-
-
-// Configs
-const parentElemnt = document.body
-let screenHeight = window.innerHeight
-let screenWidth = window.innerWidth
-let viewDistance = 2000
-let fov = 75
-let nearPlane = 0.1
-let clearColour = 0x001c0c // Scene background colour
-let fogColour = 0x001c0c
-let fogStart = 1000
-let fogEnd = 2000
+import { degreesToRadians } from './includes/utils.js'
+import { addSettings } from './includes/settings.js'
 
 
 // Init scene
 const scene = new THREE.Scene()
 const renderer = new THREE.WebGLRenderer({antialias: true})
 const texLoader = new THREE.TextureLoader()
-renderer.setSize(screenWidth, screenHeight)
-renderer.setClearColor( clearColour )
-parentElemnt.append(renderer.domElement)
-
+renderer.setSize(configs.screenWidth, configs.screenHeight)
+renderer.setClearColor(configs.clearColour)
+scene.fog = new THREE.Fog( configs.fogColour, configs.fogStart.initial, configs.fogEnd.initial )
+configs.parentElemnt.append(renderer.domElement)
 
 const player = new THREE.Object3D()
-const camera = new THREE.PerspectiveCamera( fov, screenWidth/screenHeight, nearPlane, viewDistance)
+const camera = new THREE.PerspectiveCamera( configs.fov.initial, configs.screenWidth/configs.screenHeight, configs.nearPlane.initial, configs.viewDistance.initial)
 
 player.add(camera)
 scene.add(player)
-scene.fog = new THREE.Fog( fogColour, fogStart, fogEnd )
 
-///////////////////////////////////////////////////////
+addSettings(camera, scene)
+
+//////////////////////////////////////////////////////////////
 
 var floorGeometry = new THREE.BoxGeometry(4000, 1, 4000)
 var floorMaterial = new THREE.MeshPhongMaterial( { map: texLoader.load('dist/images/grass.jpg'), shininess: 30 } );
 var floor = new THREE.Mesh( floorGeometry, floorMaterial )
 scene.add(floor)
-
-///////////////////////////////////////////////////////
 
 var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 )
 scene.add( light )
@@ -52,18 +41,18 @@ scene.add( light )
 var directionalLight = new THREE.DirectionalLight( 0x000000, 1.5 )
 scene.add( directionalLight )
 
-
 ///////////////////////////////////////////////////////
 
-var myCar
+
+var rightHand
 
 var loader = new THREE.GLTFLoader()
 
 loader.load( 'dist/models/gun/scene.gltf', function(gltf){
     player.add(gltf.scene)
-    myCar = gltf.scene
-    addControles(myCar)
-    setPosition(myCar)
+    rightHand = gltf.scene
+    addControles()
+    setPosition(rightHand)
     animate()
 }, undefined, function(error){
 	console.error( error )
@@ -131,12 +120,7 @@ var xVelocity = 0
 var zVelocity = 0
 var lookSensitivity = 0.02
 
-function degrees_to_radians(degrees) {
-  var pi = Math.PI;
-  return degrees * (pi/180);
-}
-
-var quaterTurn = degrees_to_radians(90)
+var quaterTurn = degreesToRadians(90)
 
 var animate = function() {
 
