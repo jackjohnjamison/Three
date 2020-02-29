@@ -1,30 +1,41 @@
+  //////////////////////////////////////////////////////
+ ///    threeJS FPS                     ***
+//////////////////////////////////////////////////////
+
 var THREE = window.THREE = require('three')
 require('three/examples/js/loaders/GLTFLoader')
 
-///////////////////////////////////////////////////////
+import { KEYCHECK } from './includes/key-check.js'
 
-var scene = new THREE.Scene()
 
-///////////////////////////////////////////////////////
+// Configs
+const parentElemnt = document.body
+let screenHeight = window.innerHeight
+let screenWidth = window.innerWidth
+let viewDistance = 2000
+let fov = 75
+let nearPlane = 0.1
+let clearColour = 0x001c0c // Scene background colour
+let fogColour = 0x001c0c
+let fogStart = 1000
+let fogEnd = 2000
 
-player = new THREE.Object3D()
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 4000)
+
+// Init scene
+const scene = new THREE.Scene()
+const renderer = new THREE.WebGLRenderer({antialias: true})
+const texLoader = new THREE.TextureLoader()
+renderer.setSize(screenWidth, screenHeight)
+renderer.setClearColor( clearColour )
+parentElemnt.append(renderer.domElement)
+
+
+const player = new THREE.Object3D()
+const camera = new THREE.PerspectiveCamera( fov, screenWidth/screenHeight, nearPlane, viewDistance)
 
 player.add(camera)
 scene.add(player)
-
-
-///////////////////////////////////////////////////////
-
-
-
-
-var renderer = new THREE.WebGLRenderer({antialias: true})
-const texLoader = new THREE.TextureLoader();
-
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setClearColor( 0xcccccc )
-document.body.append(renderer.domElement)
+scene.fog = new THREE.Fog( fogColour, fogStart, fogEnd )
 
 ///////////////////////////////////////////////////////
 
@@ -60,37 +71,11 @@ loader.load( 'dist/models/gun/scene.gltf', function(gltf){
 
 ///////////////////////////////////////////////////////
 
-var pressedKeys = {}
 
-function initCheckKeys(key) {
-    totalKeys = 230
-
-    for (var i = 0; i < totalKeys; i++) {
-        pressedKeys[i] = false
-    }
-    document.addEventListener('keydown', event => {
-        event.preventDefault()
-        pressedKeys[event.keyCode] = true
-    })
-    document.addEventListener("keyup", event => {
-        pressedKeys[event.keyCode] = false
-    })
-}
-
-initCheckKeys()
-
-function checkKey(keyCode) {
-    return pressedKeys[keyCode]
-}
-
-
-
-///////////////////////////////////////////////////////
-
-var arrowFoward =  function(){return checkKey(87)}
-var arrowBack = function(){return checkKey(83)}
-var arrowRight = function(){return checkKey(68)}
-var arrowLeft = function(){return checkKey(65)}
+var arrowFoward =  function(){return KEYCHECK(87)}
+var arrowBack = function(){return KEYCHECK(83)}
+var arrowRight = function(){return KEYCHECK(68)}
+var arrowLeft = function(){return KEYCHECK(65)}
 
 function addControles() {
     document.addEventListener('keydown', event => {
@@ -104,9 +89,9 @@ document.body.requestPointerLock = document.body.requestPointerLock || document.
 
 var movementX = 0
 // var movementY = 0
-var timeStamp = 0
-timeStampPrev = 0
-var pointerLocked = false
+let timeStamp = 0
+let timeStampPrev = 0
+let pointerLocked = false
 
 
 function pointerLock() {
