@@ -8,7 +8,7 @@ require('three/examples/js/loaders/GLTFLoader')
 import { configs } from './includes/configs.js'
 import { KEYCHECK } from './includes/key-check.js'
 import { degreesToRadians } from './includes/utils.js'
-import { addSettings } from './includes/settings.js'
+import { addSettings } from './includes/setting-manager.js'
 
 
 // Init scene
@@ -17,11 +17,11 @@ const renderer = new THREE.WebGLRenderer({antialias: true})
 const texLoader = new THREE.TextureLoader()
 renderer.setSize(configs.screenWidth, configs.screenHeight)
 renderer.setClearColor(configs.clearColour)
-scene.fog = new THREE.Fog( configs.fogColour, configs.fogStart.initial, configs.fogEnd.initial )
+scene.fog = new THREE.Fog( configs.fogColour, configs.fogStart, configs.fogEnd )
 configs.parentElemnt.append(renderer.domElement)
 
 const player = new THREE.Object3D()
-const camera = new THREE.PerspectiveCamera( configs.fov.initial, configs.screenWidth/configs.screenHeight, configs.nearPlane.initial, configs.viewDistance.initial)
+const camera = new THREE.PerspectiveCamera( configs.fov, configs.screenWidth/configs.screenHeight, configs.nearPlane, configs.viewDistance)
 
 player.add(camera)
 scene.add(player)
