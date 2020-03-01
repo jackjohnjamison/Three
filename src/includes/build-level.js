@@ -1,10 +1,14 @@
-function buildLevel(THREE, loader, scene) {
-    
+function buildLevel() {
+
+    const scene = window.scene
+    const THREE = window.THREE
+    const GLTFloader = window.ENGINE.GLTFloader
+
     // Tree printer
 
     const treeRows = 10
     const treeInterval = 900
-    const treeSpaceRandomizer = 500
+    const treeSpaceRandomizer = 550
     const treeScaleRandomizer = 20
     const treeScale = 30
 
@@ -16,12 +20,13 @@ function buildLevel(THREE, loader, scene) {
     for(let i = 0; i < treeRows; i++) {
         let treeX = 0 + treeInterval * i
 
-        for(let i = 0; i < treeRows; i++) {
-            let treeZ = 0 + treeInterval * i
+        for(let j = 0; j < treeRows; j++) {
+            let treeZ = 0 + treeInterval * j
 
-            loader.load( 'dist/models/tree/scene.gltf', function(gltf){
+            GLTFloader.load( 'dist/models/tree/scene.gltf', function(gltf){
                 scene.add(gltf.scene)
                 let tree = gltf.scene
+                tree.name = 'Tree ' + i + ' ' + j
                 tree.position.x = treeX + addRandom(treeSpaceRandomizer)
                 tree.position.z = treeZ + addRandom(treeSpaceRandomizer)
                 tree.rotation.y += addRandom(7)
@@ -36,9 +41,10 @@ function buildLevel(THREE, loader, scene) {
 
     // Arch
 
-    loader.load( 'dist/models/arch/scene.gltf', function(gltf){
+    GLTFloader.load( 'dist/models/arch/scene.gltf', function(gltf){
         scene.add(gltf.scene)
         let arch = gltf.scene
+        arch.name = 'Arch'
         arch.position.x = 200
         arch.position.z = -1500
         arch.position.y = 170
@@ -68,6 +74,7 @@ function buildLevel(THREE, loader, scene) {
     var floorGeometry = new THREE.BoxGeometry(floorXDimension, 0, floorZDimension)
     var floorMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
     var floor = new THREE.Mesh( floorGeometry, floorMaterial )
+    floor.name = 'Floor'
     
     scene.add(floor)
 
@@ -77,8 +84,9 @@ function buildLevel(THREE, loader, scene) {
     //////////////////////////////////////////////////////////////
     ///   Lights
 
-    var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, .8 )
-    scene.add( light )
+    const hemisphereLight = new THREE.HemisphereLight( 0xffffbb, 0x080820, .8 )
+    hemisphereLight.name = 'Hemisphere light'
+    scene.add(hemisphereLight)
 
     // var directionalLight = new THREE.DirectionalLight( 0x000000, 1.5 )
     // scene.add( directionalLight )

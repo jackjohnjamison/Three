@@ -2,8 +2,8 @@ import { settings } from './settings.js'
 
 const addSettings = function(KEYCHECK, camera, scene, configs) {
 
-    const valueUpKey = function(){return KEYCHECK(104)}
-    const valueDownKey = function(){return KEYCHECK(98)}
+    const valueUpKey = function(){return window.ENGINE.KEYCHECK(104)}
+    const valueDownKey = function(){return window.ENGINE.KEYCHECK(98)}
 
     for (let setting in settings) {
         
@@ -13,19 +13,19 @@ const addSettings = function(KEYCHECK, camera, scene, configs) {
             let type
             switch(settingObject.type) {
                 case 'Camera':
-                    type = camera
+                    type = window.ENGINE.camera
                     break
     
                 case 'Scene fog':
-                    type = scene.fog
+                    type = window.scene.fog
                     break
 
                 case 'Player controls':
-                    type = configs
+                    type = window.ENGINE.configs
                     break
             }
             type[settingObject.objectProperty] += (valueUpKey() * settingObject.interval) - (valueDownKey() * settingObject.interval)
-            camera.updateProjectionMatrix() // Redundant in none type Camera cases
+            window.ENGINE.camera.updateProjectionMatrix() // Redundant in none type Camera cases
             console.log(settingObject.description, type[settingObject.objectProperty]) // Don't delete!
         }
     }
@@ -36,7 +36,7 @@ const addSettings = function(KEYCHECK, camera, scene, configs) {
             for(let setting in settings) {
                 let settingObject = settings[setting]
 
-                if(KEYCHECK(settingObject.keyCode)) {
+                if(window.ENGINE.KEYCHECK(settingObject.keyCode)) {
                     settingObject.settingFunction()
                 }
             }

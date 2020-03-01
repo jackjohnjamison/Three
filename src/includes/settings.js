@@ -5,7 +5,7 @@ const settings = {
         interval: 100,
         objectProperty: 'far',
         type: 'Camera',
-        keyCode: 86,
+        keyCode: 86, // V
         description: 'View distance'
     },
 
@@ -14,7 +14,7 @@ const settings = {
         interval: 5,
         objectProperty: 'fov',
         type: 'Camera',
-        keyCode: 70,
+        keyCode: 70, // F
         description: 'Field of view'
     },
 
@@ -23,7 +23,7 @@ const settings = {
         interval: 2,
         objectProperty: 'near',
         type: 'Camera',
-        keyCode: 78,
+        keyCode: 78, // N
         description: 'Near plane'
     },
 
@@ -32,7 +32,7 @@ const settings = {
         interval: 50,
         objectProperty: 'near',
         type: 'Scene fog',
-        keyCode: 79,
+        keyCode: 79, // O
         description: 'Fog start'
     },
 
@@ -41,7 +41,7 @@ const settings = {
         interval: 50,
         objectProperty: 'far',
         type: 'Scene fog',
-        keyCode: 80,
+        keyCode: 80, // P
         description: 'Fog end'
     },
 
@@ -50,7 +50,7 @@ const settings = {
         interval: .1,
         objectProperty: 'acceleration',
         type: 'Player controls',
-        keyCode: 90,
+        keyCode: 90, // Z
         description: 'Player acceleration'
     },
 
@@ -59,7 +59,7 @@ const settings = {
         interval: .01,
         objectProperty: 'friction',
         type: 'Player controls',
-        keyCode: 75,
+        keyCode: 75, // K
         description: 'Player friction'
     },
 
@@ -68,7 +68,7 @@ const settings = {
         interval: .01,
         objectProperty: 'lookSensitivity',
         type: 'Player controls',
-        keyCode: 76,
+        keyCode: 76, // L
         description: 'lookSensitivity'
     }
 }

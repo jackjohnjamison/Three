@@ -1,4 +1,4 @@
-document.body.requestPointerLock = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
+document.body.requestPointerLock // = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
 
 let movementX = 0
 let movementY = 0
@@ -20,8 +20,8 @@ let quaterTurn = 0
 function pointerLock() {
     document.body.requestPointerLock()
     document.addEventListener('mousemove', event => {
-        movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0
-        movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
+        movementX = event.movementX // || event.mozMovementX || event.webkitMovementX || 0
+        movementY = event.movementY // || event.mozMovementY || event.webkitMovementY || 0
         timeStamp = event.timeStamp
     })
     document.addEventListener('pointerlockchange', function() {
@@ -45,12 +45,12 @@ function initPlayerControls(KEYCHECK, UTILS, player) {
         }
     })
 
-    arrowFoward = function(){return KEYCHECK(87)}
-    arrowBack = function(){return KEYCHECK(83)}
-    arrowRight = function(){return KEYCHECK(68)}
-    arrowLeft = function(){return KEYCHECK(65)}
+    arrowFoward = function(){return window.ENGINE.KEYCHECK(87)}
+    arrowBack = function(){return window.ENGINE.KEYCHECK(83)}
+    arrowRight = function(){return window.ENGINE.KEYCHECK(68)}
+    arrowLeft = function(){return window.ENGINE.KEYCHECK(65)}
 
-    quaterTurn = UTILS.degreesToRadians(90)
+    quaterTurn = window.ENGINE.UTILS.degreesToRadians(90)
 }
 
 function playerControls(configs, player, camera) {
