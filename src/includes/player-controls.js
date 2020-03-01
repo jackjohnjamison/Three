@@ -6,10 +6,6 @@ let timeStamp = 0
 let timeStampPrev = 0
 let pointerLocked = false
 
-// const acceleration = 2
-// const friction = 0.9
-// const lookSensitivity = 0.02
-
 let xVelocity = 0
 let zVelocity = 0
 
@@ -68,7 +64,7 @@ function playerControls(configs, player) {
     player.position.x += xVelocity
     
     if(pointerLocked && timeStamp !== timeStampPrev) {
-        player.rotation.y -= movementX * lookSensitivity
+        player.rotation.y -= movementX * configs.lookSensitivity
     }
     timeStampPrev = timeStamp
     

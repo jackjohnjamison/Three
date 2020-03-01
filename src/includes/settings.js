@@ -6,7 +6,7 @@ settings.viewDistance = {
     objectProperty: 'far',
     type: 'Camera',
     keyCode: 86,
-    description: 'View distance '
+    description: 'View distance'
 }
 
 // field of view
@@ -15,7 +15,7 @@ settings.fov = {
     objectProperty: 'fov',
     type: 'Camera',
     keyCode: 70,
-    description: 'Field of view '
+    description: 'Field of view'
 }
 
 // Near plane
@@ -24,7 +24,7 @@ settings.nearPlane = {
     objectProperty: 'near',
     type: 'Camera',
     keyCode: 78,
-    description: 'Near plane '
+    description: 'Near plane'
 }
 
 // Fog start
@@ -33,7 +33,7 @@ settings.fogStart = {
     objectProperty: 'near',
     type: 'Scene fog',
     keyCode: 79,
-    description: 'Fog start '
+    description: 'Fog start'
 }
 
 // Fog end
@@ -42,7 +42,7 @@ settings.fogEnd = {
     objectProperty: 'far',
     type: 'Scene fog',
     keyCode: 80,
-    description: 'Fog end '
+    description: 'Fog end'
 }
 
 /////////////////////////////////////////
@@ -56,22 +56,22 @@ settings.acceleration = {
     description: 'Player acceleration'
 }
 
-// // Fog end
-// settings.fogEnd = {
-//     interval: 50,
-//     objectProperty: 'far',
-//     type: 'Scene fog',
-//     keyCode: 80,
-//     description: 'Fog end '
-// }
+// Player friction
+settings.friction = {
+    interval: .01,
+    objectProperty: 'friction',
+    type: 'Player controls',
+    keyCode: 75,
+    description: 'Player friction'
+}
 
-// // Fog end
-// settings.fogEnd = {
-//     interval: 50,
-//     objectProperty: 'far',
-//     type: 'Scene fog',
-//     keyCode: 80,
-//     description: 'Fog end '
-// }
+// lookSensitivity
+settings.lookSensitivity = {
+    interval: .01,
+    objectProperty: 'lookSensitivity',
+    type: 'Player controls',
+    keyCode: 76,
+    description: 'lookSensitivity'
+}
 
 export { settings }
