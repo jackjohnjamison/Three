@@ -1,7 +1,8 @@
 document.body.requestPointerLock = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
 
 var movementX = 0
-// var movementY = 0
+var movementY = 0
+
 let timeStamp = 0
 let timeStampPrev = 0
 let pointerLocked = false
@@ -20,7 +21,7 @@ function pointerLock() {
     document.body.requestPointerLock()
     document.addEventListener('mousemove', event => {
         movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0
-        // movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
+        movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
         timeStamp = event.timeStamp
     })
     pointerLocked = true
@@ -46,7 +47,7 @@ function initPlayerControls(KEYCHECK, UTILS) {
     quaterTurn = UTILS.degreesToRadians(90)
 }
 
-function playerControls(configs, player) {
+function playerControls(configs, player, camera) {
 
     zVelocity -= (configs.acceleration * Math.cos(player.rotation.y)) * arrowFoward()
     zVelocity += (configs.acceleration * Math.cos(player.rotation.y)) * arrowBack()
@@ -65,6 +66,7 @@ function playerControls(configs, player) {
     
     if(pointerLocked && timeStamp !== timeStampPrev) {
         player.rotation.y -= movementX * configs.lookSensitivity
+        camera.rotation.x -= movementY * configs.lookSensitivity
     }
     timeStampPrev = timeStamp
     

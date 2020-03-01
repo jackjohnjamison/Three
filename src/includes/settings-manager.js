@@ -25,11 +25,8 @@ const addSettings = function(KEYCHECK, camera, scene, configs) {
                     break
             }
             type[settingObject.objectProperty] += (valueUpKey() * settingObject.interval) - (valueDownKey() * settingObject.interval)
-
-            // console.log(type)
             camera.updateProjectionMatrix() // Redundant in none type Camera cases
-
-            console.log(settingObject.description, type[settingObject.objectProperty])
+            console.log(settingObject.description, type[settingObject.objectProperty]) // Don't delete!
         }
     }
 

@@ -42,28 +42,6 @@ scene.add( light )
 var directionalLight = new THREE.DirectionalLight( 0x000000, 1.5 )
 scene.add( directionalLight )
 
-///////////////////////////////////////////////////////
-
-
-var rightHand
-
-var loader = new THREE.GLTFLoader()
-
-loader.load( 'dist/models/gun/scene.gltf', function(gltf){
-    player.add(gltf.scene)
-    rightHand = gltf.scene
-    setPosition(rightHand)
-    animate()
-}, undefined, function(error){
-	console.error( error )
-})
-
-///////////////////////////////////////////////////////////////////
-
-initPlayerControls(KEYCHECK, UTILS)
-
-//////////
-
 function setPosition(object) {
     object.position.z = -8
     object.position.y = -2
@@ -77,9 +55,31 @@ function setPosition(object) {
     floor.position.y = -200
 }
 
+var rightHand
+
+var loader = new THREE.GLTFLoader()
+
+loader.load( 'dist/models/gun/scene.gltf', function(gltf){
+    camera.add(gltf.scene)
+    rightHand = gltf.scene
+    setPosition(rightHand)
+    animate()
+}, undefined, function(error){
+	console.error( error )
+})
+
+///////////////////////////////////////////////////////////////////
+
+
+initPlayerControls(KEYCHECK, UTILS)
+
+//////////
+
+
+
 var animate = function() {
 
-    playerControls(configs, player)
+    playerControls(configs, player, camera)
 
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
