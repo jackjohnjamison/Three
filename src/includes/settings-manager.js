@@ -26,7 +26,6 @@ const addSettings = function(KEYCHECK, camera, scene, configs) {
                     type = configs
                     break
             }
-            console.log('accelerationtype', type[settingObject.objectProperty])
             type[settingObject.objectProperty] += (valueUpKey() * settingObject.interval) - (valueDownKey() * settingObject.interval)
             camera.updateProjectionMatrix()
         }

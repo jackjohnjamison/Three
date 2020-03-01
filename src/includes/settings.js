@@ -47,13 +47,13 @@ settings.fogEnd = {
 
 /////////////////////////////////////////
 
-// Acceleration
+// Player acceleration
 settings.acceleration = {
     interval: .1,
     objectProperty: 'acceleration',
     type: 'Player controls',
     keyCode: 90,
-    description: 'Player friction'
+    description: 'Player acceleration'
 }
 
 // // Fog end
