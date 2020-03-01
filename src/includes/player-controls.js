@@ -1,4 +1,4 @@
-import { degreesToRadians } from './utils.js'
+// import { degreesToRadians } from './utils.js'
 
 function addControles() {
     document.addEventListener('keydown', event => {
@@ -35,8 +35,6 @@ const acceleration = 2
 const friction = 0.9
 const lookSensitivity = 0.02
 
-var quaterTurn = degreesToRadians(90)
-
 let xVelocity = 0
 let zVelocity = 0
 
@@ -44,12 +42,16 @@ let arrowFoward = function() {}
 let arrowBack = function() {}
 let arrowRight = function() {}
 let arrowLeft = function() {}
+let quaterTurn = 0
 
-function initPlayerControls(KEYCHECK) {
+function initPlayerControls(KEYCHECK, UTILS) {
     arrowFoward = function(){return KEYCHECK(87)}
     arrowBack = function(){return KEYCHECK(83)}
     arrowRight = function(){return KEYCHECK(68)}
     arrowLeft = function(){return KEYCHECK(65)}
+
+    console.log(UTILS)
+    quaterTurn = UTILS.degreesToRadians(90)
 }
 
 function playerControls(player) {

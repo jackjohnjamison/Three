@@ -7,7 +7,7 @@ require('three/examples/js/loaders/GLTFLoader')
 
 import { configs } from './includes/configs.js'
 import { KEYCHECK } from './includes/key-check.js'
-// import { degreesToRadians } from './includes/utils.js'
+import * as UTILS from './includes/utils.js'
 import { addSettings } from './includes/settings-manager.js'
 import { initPlayerControls, playerControls, addControles } from './includes/player-controls.js'
 
@@ -59,43 +59,9 @@ loader.load( 'dist/models/gun/scene.gltf', function(gltf){
 	console.error( error )
 })
 
-///////////////////////////////////////////////////////
-
-
-// function addControles() {
-//     document.addEventListener('keydown', event => {
-//         if (event.keyCode === 13) {
-//             pointerLock()
-//         }
-//     })
-// }
-
-// document.body.requestPointerLock = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
-
-// var movementX = 0
-// // var movementY = 0
-// let timeStamp = 0
-// let timeStampPrev = 0
-// let pointerLocked = false
-
-
-// function pointerLock() {
-//     document.body.requestPointerLock()
-//     document.addEventListener('mousemove', event => {
-//         movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0
-//         // movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
-//         timeStamp = event.timeStamp
-//     })
-//     pointerLocked = true
-// }
-
-// document.addEventListener('pointerlockchange', event => {
-//     console.log(event)
-// })
-
 ///////////////////////////////////////////////////////////////////
 
-initPlayerControls(KEYCHECK)
+initPlayerControls(KEYCHECK, UTILS)
 
 //////////
 
@@ -111,14 +77,6 @@ function setPosition(object) {
     floor.position.z = -1000
     floor.position.y = -200
 }
-
-///////////////////////////////////////////////////////
-
-// var acceleration = 2
-// var friction = 0.9
-// var xVelocity = 0
-// var zVelocity = 0
-// var lookSensitivity = 0.02
 
 var animate = function() {
 
