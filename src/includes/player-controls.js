@@ -1,3 +1,5 @@
+import { TetrahedronGeometry } from "three"
+
 document.body.requestPointerLock = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
 
 let movementX = 0
@@ -43,7 +45,7 @@ function initPlayerControls(KEYCHECK, UTILS) {
     quaterTurn = UTILS.degreesToRadians(90)
 }
 
-function playerControls(configs, player, camera) {
+function playerControls(configs, player, camera, collidables) {
 
     zVelocity -= (configs.acceleration * Math.cos(player.rotation.y)) * arrowFoward()
     zVelocity += (configs.acceleration * Math.cos(player.rotation.y)) * arrowBack()
@@ -57,8 +59,29 @@ function playerControls(configs, player, camera) {
     xVelocity -= (configs.acceleration * Math.sin(player.rotation.y + quaterTurn)) * arrowLeft()
     xVelocity += (configs.acceleration * Math.sin(player.rotation.y + quaterTurn)) * arrowRight()
     
-    player.position.z += zVelocity
-    player.position.x += xVelocity
+    // check collidables
+    let oldX = player.position.x
+    let oldZ = player.position.z
+    let newX = player.position.x += xVelocity
+    let newZ = player.position.z += zVelocity
+    let playerPos = new THREE.Box3(
+        new THREE.Vector3(newX - 40, player.position.y - 40, newZ - 40),
+        new THREE.Vector3(newX + 40, player.position.y + 40, newZ + 40)
+    )
+    let isClear = collidables.every(collidable => {
+        return collidable.intersectsBox(playerPos) === false
+    })
+    if (isClear) {
+        player.position.z = newZ
+        player.position.x = newX
+    } else {
+        player.position.z = oldZ
+        player.position.x = oldX
+    }
+    console.log(isClear)
+    //
+
+    
     
     if(pointerLocked && timeStamp !== timeStampPrev) {
         player.rotation.y -= movementX * configs.lookSensitivity

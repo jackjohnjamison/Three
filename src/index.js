@@ -10,6 +10,8 @@ import { KEYCHECK } from './includes/key-check.js'
 import * as UTILS from './includes/utils.js'
 import { addSettings } from './includes/settings-manager.js'
 import { initPlayerControls, playerControls } from './includes/player-controls.js'
+import { wall1 } from './includes/example-level.js'
+import { Box3 } from 'three'
 
 
 // Init scene
@@ -80,6 +82,15 @@ floor.position.y = -200
 
 scene.add(floor)
 
+// collision test - temp
+scene.add(wall1)
+wall1.geometry.computeBoundingBox()
+let wall1BBox = new Box3( new THREE.Vector3(), new THREE.Vector3() )
+wall1BBox.setFromObject(wall1)
+const collidables = []
+collidables.push(wall1BBox)
+//
+
 //////////////////////////////////////////////////////////////
 
 var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 )
@@ -92,7 +103,7 @@ scene.add( directionalLight )
 
 var animate = function() {
 
-    playerControls(configs, player, camera)
+    playerControls(configs, player, camera, collidables)// rename to update player position?
 
     renderer.render(scene, camera)
     requestAnimationFrame(animate)

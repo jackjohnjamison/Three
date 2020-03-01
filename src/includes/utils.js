@@ -3,4 +3,10 @@ function degreesToRadians(degrees) {
     return degrees * (pi/180)
 }
 
-export { degreesToRadians }
+
+function checkBoxesIntersecting(box1, box2) {
+
+}
+
+
+export { degreesToRadians, checkBoxesIntersecting }
