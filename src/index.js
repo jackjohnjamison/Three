@@ -2,27 +2,19 @@
  ///    threeJS FPS                     ***
 //////////////////////////////////////////////////////
 
-window.THREE = require('three')
-require('three/examples/js/loaders/GLTFLoader')
-
+import * as THREE from 'three';
 import { initEngine } from './includes/init.js'
-import { addSettings } from './includes/settings-manager.js'
-import { initPlayerControls, playerControls } from './includes/player-controls.js'
-import { buildLevel } from './includes/build-level.js'
 import { initPlayer } from './includes/player-object.js'
+import { addSettings } from './includes/settings-manager.js'
+import { initPlayerControls } from './includes/player-controls.js'
+import { buildLevel } from './includes/build-level.js'
+import { animate } from './includes/game-loop.js'
+
+window.THREE = THREE
 
 initEngine()
 initPlayer()
 addSettings()
 initPlayerControls()
 buildLevel()
-
-var animate = function() {
-
-    playerControls(window.ENGINE.configs, window.ENGINE.player, window.ENGINE.camera)
-
-    window.ENGINE.renderer.render(window.scene, window.ENGINE.camera)
-    requestAnimationFrame(animate)
-}
-
 animate()

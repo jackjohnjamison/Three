@@ -1,6 +1,7 @@
 import { configs } from './configs.js'
 import { KEYCHECK } from './key-check.js'
 import * as UTILS from './utils.js'
+import GLTFLoader from 'three-gltf-loader';
 
 function initEngine() {
 
@@ -13,7 +14,7 @@ function initEngine() {
     window.scene = new window.THREE.Scene()
     window.scene.name = 'Root scene'
     
-    window.ENGINE.GLTFloader = new THREE.GLTFLoader()
+    window.ENGINE.GLTFloader = new GLTFLoader()
     
     window.ENGINE.renderer = new window.THREE.WebGLRenderer({antialias: true})
     window.ENGINE.renderer.setSize(configs.screenWidth, configs.screenHeight)
