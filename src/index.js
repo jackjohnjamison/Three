@@ -8,7 +8,7 @@ require('three/examples/js/loaders/GLTFLoader')
 import { configs } from './includes/configs.js'
 import { KEYCHECK } from './includes/key-check.js'
 import { degreesToRadians } from './includes/utils.js'
-import { addSettings } from './includes/setting-manager.js'
+import { addSettings } from './includes/settings-manager.js'
 
 
 // Init scene
