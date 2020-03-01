@@ -21,39 +21,13 @@ renderer.setClearColor(configs.clearColour)
 scene.fog = new THREE.Fog( configs.fogColour, configs.fogStart, configs.fogEnd )
 configs.parentElemnt.append(renderer.domElement)
 
-const player = new THREE.Object3D()
-const camera = new THREE.PerspectiveCamera( configs.fov, configs.screenWidth/configs.screenHeight, configs.nearPlane, configs.viewDistance)
-
-player.add(camera)
-scene.add(player)
-
-addSettings(KEYCHECK, camera, scene, configs)
 
 //////////////////////////////////////////////////////////////
 
-var floorGeometry = new THREE.BoxGeometry(4000, 1, 4000)
-var floorMaterial = new THREE.MeshPhongMaterial( { map: texLoader.load('dist/images/grass.jpg'), shininess: 30 } );
-var floor = new THREE.Mesh( floorGeometry, floorMaterial )
-scene.add(floor)
-
-var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 )
-scene.add( light )
-
-var directionalLight = new THREE.DirectionalLight( 0x000000, 1.5 )
-scene.add( directionalLight )
-
-function setPosition(object) {
-    object.position.z = -8
-    object.position.y = -2
-    object.position.x = 3
-    object.scale.x = 0.3
-    object.scale.y = 0.3
-    object.scale.z = 0.3
-    object.rotation.y = 1.5708
-
-    floor.position.z = -1000
-    floor.position.y = -200
-}
+const player = new THREE.Object3D()
+const camera = new THREE.PerspectiveCamera( configs.fov, configs.screenWidth/configs.screenHeight, configs.nearPlane, configs.viewDistance)
+player.add(camera)
+scene.add(player)
 
 var rightHand
 
@@ -63,19 +37,58 @@ loader.load( 'dist/models/gun/scene.gltf', function(gltf){
     camera.add(gltf.scene)
     rightHand = gltf.scene
     setPosition(rightHand)
-    animate()
+    
 }, undefined, function(error){
 	console.error( error )
 })
 
-///////////////////////////////////////////////////////////////////
+function setPosition(object) { // this sets the position of the right hand. Needs roling into another function
+    object.position.z = -8
+    object.position.y = -2
+    object.position.x = 3
+    object.scale.x = 0.3
+    object.scale.y = 0.3
+    object.scale.z = 0.3
+    object.rotation.y = 1.5708
+}
 
-
+addSettings(KEYCHECK, camera, scene, configs)
 initPlayerControls(KEYCHECK, UTILS)
 
-//////////
 
+//////////////////////////////////////////////////////////////
 
+loader.load( 'dist/models/tree/scene.gltf', function(gltf){
+    scene.add(gltf.scene)
+    let tree = gltf.scene
+    tree.position.z = -8
+    tree.position.y = -200
+    tree.position.x = -500
+    tree.scale.x = 30
+    tree.scale.y = 30
+    tree.scale.z = 30
+}, undefined, function(error){
+	console.error( error )
+})
+
+var floorGeometry = new THREE.BoxGeometry(10000, 0, 10000)
+var floorMaterial = new THREE.MeshPhongMaterial( { map: texLoader.load('dist/images/grass.jpg'), shininess: 30 } );
+var floor = new THREE.Mesh( floorGeometry, floorMaterial )
+
+// floor.position.z = -1000
+floor.position.y = -200
+
+scene.add(floor)
+
+//////////////////////////////////////////////////////////////
+
+var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 )
+scene.add( light )
+
+var directionalLight = new THREE.DirectionalLight( 0x000000, 1.5 )
+scene.add( directionalLight )
+
+///////////////////////////////////////////////////////////////////
 
 var animate = function() {
 
@@ -84,3 +97,5 @@ var animate = function() {
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
 }
+
+animate()

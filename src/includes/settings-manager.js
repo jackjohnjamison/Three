@@ -30,17 +30,17 @@ const addSettings = function(KEYCHECK, camera, scene, configs) {
         }
     }
 
-    addEventListener('keydown', event => {
-            if (valueUpKey() || valueDownKey()) {
+    addEventListener('keydown', function() {
+        if (valueUpKey() || valueDownKey()) {
 
-                for(let setting in settings) {
-                    let settingObject = settings[setting]
+            for(let setting in settings) {
+                let settingObject = settings[setting]
 
-                    if(KEYCHECK(settingObject.keyCode)) {
-                        settingObject.settingFunction()
-                    }
+                if(KEYCHECK(settingObject.keyCode)) {
+                    settingObject.settingFunction()
                 }
             }
+        }
     })
 }
 
