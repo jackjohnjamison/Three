@@ -24,7 +24,13 @@ function pointerLock() {
         movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
         timeStamp = event.timeStamp
     })
-    pointerLocked = true
+    document.addEventListener('pointerlockchange', function() {
+        if(document.pointerLockElement) {
+            pointerLocked = true
+        } else {
+            pointerLocked = false
+        }
+    })
 }
 
 
@@ -59,6 +65,7 @@ function playerControls(configs, player, camera) {
     
     player.position.z += zVelocity
     player.position.x += xVelocity
+
     
     if(pointerLocked && timeStamp !== timeStampPrev) {
         player.rotation.y -= movementX * configs.lookSensitivity
