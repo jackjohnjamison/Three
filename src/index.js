@@ -30,6 +30,7 @@ const camera = new THREE.PerspectiveCamera( configs.fov, configs.screenWidth/con
 player.add(camera)
 scene.add(player)
 player.position.z = -1000
+player.position.y = 200
 player.rotation.y = 3
 
 var loader = new THREE.GLTFLoader()
@@ -50,7 +51,7 @@ loader.load( 'dist/models/fn2000/scene.gltf', function(gltf){
 
 
 addSettings(KEYCHECK, camera, scene, configs)
-initPlayerControls(KEYCHECK, UTILS)
+initPlayerControls(KEYCHECK, UTILS, player)
 
 
 //////////////////////////////////////////////////////////////

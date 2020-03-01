@@ -34,10 +34,14 @@ function pointerLock() {
 }
 
 
-function initPlayerControls(KEYCHECK, UTILS) {
+function initPlayerControls(KEYCHECK, UTILS, player) {
     document.addEventListener('keydown', event => {
         if (event.keyCode === 13) {
             pointerLock()
+        }
+        if (event.keyCode === 81) {
+            console.log('Player X', player.position.x)
+            console.log('Player Z', player.position.z)
         }
     })
 

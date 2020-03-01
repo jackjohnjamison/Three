@@ -14,20 +14,16 @@ function buildLevel(THREE, loader, scene) {
     
 
     for(let i = 0; i < treeRows; i++) {
-
         let treeX = 0 + treeInterval * i
 
         for(let i = 0; i < treeRows; i++) {
-
             let treeZ = 0 + treeInterval * i
 
             loader.load( 'dist/models/tree/scene.gltf', function(gltf){
                 scene.add(gltf.scene)
                 let tree = gltf.scene
-
                 tree.position.x = treeX + addRandom(treeSpaceRandomizer)
                 tree.position.z = treeZ + addRandom(treeSpaceRandomizer)
-                tree.position.y = -200
                 tree.rotation.y += addRandom(7)
                 tree.scale.x = treeScale + addRandom(treeScaleRandomizer)
                 tree.scale.y = treeScale + addRandom(treeScaleRandomizer)
@@ -38,8 +34,24 @@ function buildLevel(THREE, loader, scene) {
         }
     }
 
-    /////////////////////////////////////////////////////////////////////
-    ///   Floor
+    // Arch
+
+    loader.load( 'dist/models/arch/scene.gltf', function(gltf){
+        scene.add(gltf.scene)
+        let arch = gltf.scene
+        arch.position.x = 200
+        arch.position.z = -1500
+        arch.position.y = 170
+        arch.scale.x = 80
+        arch.scale.y = 80
+        arch.scale.z = 80
+
+    }, undefined, function(error){
+        console.error( error )
+    })
+
+
+    // Floor
 
     const texLoader = new THREE.TextureLoader()
     const floorXDimension = 100000
@@ -57,9 +69,9 @@ function buildLevel(THREE, loader, scene) {
     var floorMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
     var floor = new THREE.Mesh( floorGeometry, floorMaterial )
     
-    floor.position.y = -200
-    
     scene.add(floor)
+
+    floor.position.y = -8
 
 
     //////////////////////////////////////////////////////////////
