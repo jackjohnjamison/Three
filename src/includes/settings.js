@@ -49,7 +49,7 @@ settings.fogEnd = {
 
 // Acceleration
 settings.acceleration = {
-    interval: .01,
+    interval: .1,
     objectProperty: 'acceleration',
     type: 'Player controls',
     keyCode: 90,
