@@ -11,4 +11,8 @@ configs.fogEnd = 2500
 configs.clearColour = 0x001c0c // Scene background colour
 configs.fogColour = 0x001c0c
 
+configs.acceleration = 2
+configs.friction = 0.9
+configs.lookSensitivity = 0.02
+
 export { configs }

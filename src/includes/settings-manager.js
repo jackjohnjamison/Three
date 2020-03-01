@@ -1,6 +1,8 @@
 import { settings } from './settings.js'
 
-const addSettings = function(KEYCHECK, camera, scene) {
+const addSettings = function(KEYCHECK, camera, scene, configs) {
+
+    console.log(configs.acceleration)
 
     const valueUpKey = function(){return KEYCHECK(104)}
     const valueDownKey = function(){return KEYCHECK(98)}
@@ -18,6 +20,10 @@ const addSettings = function(KEYCHECK, camera, scene) {
     
                 case 'Scene fog':
                     type = scene.fog
+                    break
+
+                case 'Player controls':
+                    type = player
                     break
             }
             type[settingObject.objectProperty] += (valueUpKey() * settingObject.interval) - (valueDownKey() * settingObject.interval)

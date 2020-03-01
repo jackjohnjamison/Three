@@ -45,4 +45,33 @@ settings.fogEnd = {
     description: 'Fog end '
 }
 
+/////////////////////////////////////////
+
+// Acceleration
+settings.acceleration = {
+    interval: .01,
+    objectProperty: 'acceleration',
+    type: 'Player controls',
+    keyCode: 90,
+    description: 'Player friction'
+}
+
+// // Fog end
+// settings.fogEnd = {
+//     interval: 50,
+//     objectProperty: 'far',
+//     type: 'Scene fog',
+//     keyCode: 80,
+//     description: 'Fog end '
+// }
+
+// // Fog end
+// settings.fogEnd = {
+//     interval: 50,
+//     objectProperty: 'far',
+//     type: 'Scene fog',
+//     keyCode: 80,
+//     description: 'Fog end '
+// }
+
 export { settings }

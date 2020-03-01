@@ -9,7 +9,7 @@ import { configs } from './includes/configs.js'
 import { KEYCHECK } from './includes/key-check.js'
 import * as UTILS from './includes/utils.js'
 import { addSettings } from './includes/settings-manager.js'
-import { initPlayerControls, playerControls, addControles } from './includes/player-controls.js'
+import { initPlayerControls, playerControls } from './includes/player-controls.js'
 
 
 // Init scene
@@ -27,7 +27,7 @@ const camera = new THREE.PerspectiveCamera( configs.fov, configs.screenWidth/con
 player.add(camera)
 scene.add(player)
 
-addSettings(KEYCHECK, camera, scene)
+addSettings(KEYCHECK, camera, scene, configs)
 
 //////////////////////////////////////////////////////////////
 
@@ -52,7 +52,6 @@ var loader = new THREE.GLTFLoader()
 loader.load( 'dist/models/gun/scene.gltf', function(gltf){
     player.add(gltf.scene)
     rightHand = gltf.scene
-    addControles()
     setPosition(rightHand)
     animate()
 }, undefined, function(error){
@@ -80,7 +79,7 @@ function setPosition(object) {
 
 var animate = function() {
 
-    playerControls(player)
+    playerControls(configs, player)
 
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
