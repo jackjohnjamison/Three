@@ -1,7 +1,6 @@
 import { settings } from './settings.js'
-import { KEYCHECK } from './key-check.js'
 
-const addSettings = function(camera, scene) {
+const addSettings = function(KEYCHECK, camera, scene) {
 
     const valueUpKey = function(){return KEYCHECK(104)}
     const valueDownKey = function(){return KEYCHECK(98)}
