@@ -2,8 +2,6 @@ import { settings } from './settings.js'
 
 const addSettings = function(KEYCHECK, camera, scene, configs) {
 
-    console.log(configs.acceleration)
-
     const valueUpKey = function(){return KEYCHECK(104)}
     const valueDownKey = function(){return KEYCHECK(98)}
 
@@ -27,9 +25,10 @@ const addSettings = function(KEYCHECK, camera, scene, configs) {
                     break
             }
             type[settingObject.objectProperty] += (valueUpKey() * settingObject.interval) - (valueDownKey() * settingObject.interval)
-            if(type.camera) {
-                camera.updateProjectionMatrix() // Redundant in none type Camera cases
-            }
+
+            // console.log(type)
+            camera.updateProjectionMatrix() // Redundant in none type Camera cases
+
             console.log(settingObject.description, type[settingObject.objectProperty])
         }
     }

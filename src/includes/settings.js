@@ -45,8 +45,6 @@ settings.fogEnd = {
     description: 'Fog end'
 }
 
-/////////////////////////////////////////
-
 // Player acceleration
 settings.acceleration = {
     interval: .1,
