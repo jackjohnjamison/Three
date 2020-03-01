@@ -1,26 +1,86 @@
+  //////////////////////////////////////////////////////
+ ///    threeJS FPS                     ***
+//////////////////////////////////////////////////////
+
 var THREE = window.THREE = require('three')
 require('three/examples/js/loaders/GLTFLoader')
 
-///////////////////////////////////////////////////////
+import { configs } from './includes/configs.js'
+import { KEYCHECK } from './includes/key-check.js'
+import * as UTILS from './includes/utils.js'
+import { addSettings } from './includes/settings-manager.js'
+import { initPlayerControls, playerControls } from './includes/player-controls.js'
 
-var scene = new THREE.Scene()
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 4000)
 
-var renderer = new THREE.WebGLRenderer({antialias: true})
-const texLoader = new THREE.TextureLoader();
+// Init scene
+const scene = new THREE.Scene()
+const renderer = new THREE.WebGLRenderer({antialias: true})
+const texLoader = new THREE.TextureLoader()
+renderer.setSize(configs.screenWidth, configs.screenHeight)
+renderer.setClearColor(configs.clearColour)
+scene.fog = new THREE.Fog( configs.fogColour, configs.fogStart, configs.fogEnd )
+configs.parentElemnt.append(renderer.domElement)
 
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setClearColor( 0xcccccc )
-document.body.append(renderer.domElement)
 
-///////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
-var floorGeometry = new THREE.BoxGeometry(4000, 1, 4000)
+const player = new THREE.Object3D()
+const camera = new THREE.PerspectiveCamera( configs.fov, configs.screenWidth/configs.screenHeight, configs.nearPlane, configs.viewDistance)
+player.add(camera)
+scene.add(player)
+
+var rightHand
+
+var loader = new THREE.GLTFLoader()
+
+loader.load( 'dist/models/gun/scene.gltf', function(gltf){
+    camera.add(gltf.scene)
+    rightHand = gltf.scene
+    setPosition(rightHand)
+    
+}, undefined, function(error){
+	console.error( error )
+})
+
+function setPosition(object) { // this sets the position of the right hand. Needs roling into another function
+    object.position.z = -8
+    object.position.y = -2
+    object.position.x = 3
+    object.scale.x = 0.3
+    object.scale.y = 0.3
+    object.scale.z = 0.3
+    object.rotation.y = 1.5708
+}
+
+addSettings(KEYCHECK, camera, scene, configs)
+initPlayerControls(KEYCHECK, UTILS)
+
+
+//////////////////////////////////////////////////////////////
+
+loader.load( 'dist/models/tree/scene.gltf', function(gltf){
+    scene.add(gltf.scene)
+    let tree = gltf.scene
+    tree.position.z = -8
+    tree.position.y = -200
+    tree.position.x = -500
+    tree.scale.x = 30
+    tree.scale.y = 30
+    tree.scale.z = 30
+}, undefined, function(error){
+	console.error( error )
+})
+
+var floorGeometry = new THREE.BoxGeometry(10000, 0, 10000)
 var floorMaterial = new THREE.MeshPhongMaterial( { map: texLoader.load('dist/images/grass.jpg'), shininess: 30 } );
 var floor = new THREE.Mesh( floorGeometry, floorMaterial )
+
+// floor.position.z = -1000
+floor.position.y = -200
+
 scene.add(floor)
 
-///////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 )
 scene.add( light )
@@ -28,141 +88,14 @@ scene.add( light )
 var directionalLight = new THREE.DirectionalLight( 0x000000, 1.5 )
 scene.add( directionalLight )
 
-
-///////////////////////////////////////////////////////
-
-var myCar
-
-var loader = new THREE.GLTFLoader()
-
-loader.load( 'dist/models/car/scene.gltf', function(gltf){
-    scene.add(gltf.scene)
-    myCar = gltf.scene
-    addControles(myCar)
-    setPosition(myCar)
-    animate()
-}, undefined, function(error){
-	console.error( error )
-})
-
-///////////////////////////////////////////////////////
-
-var pressedKeys = {}
-
-function initCheckKeys(key) {
-    totalKeys = 230
-
-    for (var i = 0; i < totalKeys; i++) {
-        pressedKeys[i] = false
-    }
-    document.addEventListener('keydown', event => {
-        event.preventDefault()
-        pressedKeys[event.keyCode] = true
-    })
-    document.addEventListener("keyup", event => {
-        pressedKeys[event.keyCode] = false
-    })
-}
-
-initCheckKeys()
-
-function checkKey(keyCode) {
-    return pressedKeys[keyCode]
-}
-
-
-
-///////////////////////////////////////////////////////
-
-var arrowFoward =  function(){return checkKey(87)}
-var arrowBack = function(){return checkKey(83)}
-var arrowRight = function(){return checkKey(68)}
-var arrowLeft = function(){return checkKey(65)}
-
-function addControles() {
-    document.addEventListener('keydown', event => {
-        if (event.keyCode === 13) {
-            pointerLock()
-        }
-    })
-}
-
-document.body.requestPointerLock = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
-
-var movementX = 0
-// var movementY = 0
-var timeStamp = 0
-timeStampPrev = 0
-var pointerLocked = false
-
-
-function pointerLock() {
-    document.body.requestPointerLock()
-    document.addEventListener('mousemove', event => {
-        movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0
-        // movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0
-        timeStamp = event.timeStamp
-    })
-    pointerLocked = true
-}
-
-document.addEventListener('pointerlockchange', event => {
-    console.log(event)
-})
-
 ///////////////////////////////////////////////////////////////////
-
-function setPosition(object) {
-    object.position.z = -1000
-    object.position.y = -200
-    object.scale.x = 0.2
-    object.scale.y = 0.2
-    object.scale.z = 0.2
-
-    floor.position.z = -1000
-    floor.position.y = -200
-}
-
-///////////////////////////////////////////////////////
-
-var acceleration = 2
-var friction = 0.9
-var xVelocity = 0
-var zVelocity = 0
-var lookSensitivity = 0.02
-
-function degrees_to_radians(degrees) {
-  var pi = Math.PI;
-  return degrees * (pi/180);
-}
-
-var quaterTurn = degrees_to_radians(90)
 
 var animate = function() {
 
-    zVelocity -= (acceleration * Math.cos(camera.rotation.y)) * arrowFoward()
-    zVelocity += (acceleration * Math.cos(camera.rotation.y)) * arrowBack()
-    
-    xVelocity -= (acceleration * Math.sin(camera.rotation.y)) * arrowFoward()
-    xVelocity += (acceleration * Math.sin(camera.rotation.y)) * arrowBack()
-
-    zVelocity -= (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowLeft()
-    zVelocity += (acceleration * Math.cos(camera.rotation.y + quaterTurn)) * arrowRight()
-
-    xVelocity -= (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowLeft()
-    xVelocity += (acceleration * Math.sin(camera.rotation.y + quaterTurn)) * arrowRight()
-
-    camera.position.z += zVelocity
-    camera.position.x += xVelocity
-
-    if(pointerLocked && timeStamp !== timeStampPrev) {
-        camera.rotation.y -= movementX * lookSensitivity
-    }
-    timeStampPrev = timeStamp
+    playerControls(configs, player, camera)
 
     renderer.render(scene, camera)
     requestAnimationFrame(animate)
-    
-    zVelocity *= friction
-    xVelocity *= friction
 }
+
+animate()
