@@ -20,7 +20,6 @@ function initEngine() {
     window.ENGINE.renderer.setSize(configs.screenWidth, configs.screenHeight)
     window.ENGINE.renderer.setClearColor(configs.clearColour)
     
-    // scene.fog = new THREE.Fog( configs.fogColour, configs.fogStart, configs.fogEnd )
     window.scene.fog = new THREE.FogExp2( configs.fogColour, configs.fogDensity) // Alternative fog function
     
     configs.parentElemnt.append(window.ENGINE.renderer.domElement)

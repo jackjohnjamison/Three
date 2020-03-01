@@ -1,5 +1,4 @@
-document.body.requestPointerLock // = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
-
+document.body.requestPointerLock
 let movementX = 0
 let movementY = 0
 
@@ -20,8 +19,8 @@ let quaterTurn = 0
 function pointerLock() {
     document.body.requestPointerLock()
     document.addEventListener('mousemove', event => {
-        movementX = event.movementX // || event.mozMovementX || event.webkitMovementX || 0
-        movementY = event.movementY // || event.mozMovementY || event.webkitMovementY || 0
+        movementX = event.movementX
+        movementY = event.movementY
         timeStamp = event.timeStamp
     })
     document.addEventListener('pointerlockchange', function() {

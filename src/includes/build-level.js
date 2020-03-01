@@ -87,18 +87,6 @@ function buildLevel() {
     const hemisphereLight = new THREE.HemisphereLight( 0xffffbb, 0x080820, .8 )
     hemisphereLight.name = 'Hemisphere light'
     scene.add(hemisphereLight)
-
-    // var directionalLight = new THREE.DirectionalLight( 0x000000, 1.5 )
-    // scene.add( directionalLight )
-
-    // const color = 0xFFFFFF
-    // const intensity = 1
-    // const light = new THREE.RectAreaLight(color, intensity)
-    // light.power = 8000
-    // light.decay = 2
-    // light.distance = 2000
-    // light.position.set(0, 10, 0)
-    // scene.add(light)
 }
 
 export { buildLevel }
