@@ -1,16 +1,17 @@
-// const playerCollideObj = {
-//   position: {
-//     x: null, y: null, z: null
-//   },
+// const playerMeta = {
 //   width: 40,
 //   depth: 40,
 //   height: 100
 // }
 
-function handleCollisions(collideObj, zVelocity, xVelocity, collidables) {
+function handleCollisions(playerPos, playerMeta, zVelocity, xVelocity, collidables) {
+  // for every collidable check type
+  // if type == AABB do AABB intersection test only
+  // if type == ramp do AABB intersection test, 
+  // if true test if bottom of player obj inside slope
   return {
-    x: collideObj.x,
-    z: collideObj.z
+    x: playerPos.x + xVelocity,
+    z: playerPos.z + zVelocity
   }
 }
 

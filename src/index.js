@@ -22,7 +22,6 @@ const collidables = buildCollidables()
 var animate = function() {
 
     playerControls(window.ENGINE.configs, window.ENGINE.player, window.ENGINE.camera, collidables)
-
     window.ENGINE.renderer.render(window.scene, window.ENGINE.camera)
     requestAnimationFrame(animate)
 }

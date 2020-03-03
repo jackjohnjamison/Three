@@ -18,9 +18,9 @@ let arrowRight = function() {}
 let arrowLeft = function() {}
 let quaterTurn = 0
 
-// To do - rename and move to cfg?
-const playerCollideObj = {
-    position: null,
+// To do - refactor
+let newPlayerPos
+let playerMeta = {
     width: 40,
     depth: 40,
     height: 100
@@ -82,10 +82,9 @@ function playerControls(configs, player, camera, collidables) {
     // player.position.x += xVelocity
 
     // To do - rename & refactor once working
-    playerCollideObj.position = player.position
-    let newPlayerPos = handleCollisions(playerCollideObj, zVelocity, xVelocity, collidables)
+    newPlayerPos = handleCollisions(player.position, playerMeta, zVelocity, xVelocity, collidables)
     player.position.z = newPlayerPos.z
-    player.position.x += newPlayerPos.x
+    player.position.x = newPlayerPos.x
 
     
     if(pointerLocked && timeStamp !== timeStampPrev) {
