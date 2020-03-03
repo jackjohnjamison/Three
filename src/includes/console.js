@@ -1,97 +1,58 @@
 function initConsoleFunctions() {
 
-    // class setting {
-    // constructor(variable, description, reloadProjection = false) {
-    //     this.get = function() {
-    //         return description, window[variable]
-    //     }
-    //     this.set = function (value) {
-    //         window[variable] = value
-    //         if(reloadProjection) {
-    //             window.ENGINE.camera.updateProjectionMatrix()
-    //         }
-    //         return variable
-    //     }
-    // }
-// }
-    
     const consoleFunctions = {
-        // viewDistance: new setting('ENGINE.camera.far', 'View distance', true),
-            // get: function() {
-            //     return 'View distance', window.ENGINE.camera.far
-            // },
-            // set: function(value) {
-            //     window.ENGINE.camera.far = value
-            //     window.ENGINE.camera.updateProjectionMatrix()
-            //     return this.get()
-            // }
-    
-        fov: {
-            get: function() {
-                return 'Field of view', window.ENGINE.camera.fov
-            },
-            set: function(value) {
-                window.ENGINE.camera.fov = value
-                window.ENGINE.camera.updateProjectionMatrix()
-                return this.get()
-            }
+        viewDistance: {variable: 'window.ENGINE.camera.far',
+            description: 'View distance',
+            reloadProjection: true
+        },
+
+        fov: {            
+            variable: 'window.ENGINE.camera.fov',
+            description: 'Field of view',
+            reloadProjection: true
         },
     
         nearPlane: {
-            get: function() {
-                return 'Near plane', window.ENGINE.camera.near
-            },
-            set: function(value) {
-                window.ENGINE.camera.near = value
-                window.ENGINE.camera.updateProjectionMatrix()
-                return this.get()
-            }
+            variable: 'window.ENGINE.camera.near',
+            description: 'Near plane',
+            reloadProjection: true
         },
     
         fogDensity: {
-            get: function() {
-                return 'Fog desnity', window.scene.fog.density
-            },
-            set: function(value) {
-                window.scene.fog.density = value
-                return this.get()
-            }
+            variable: 'window.scene.fog.density',
+            description: 'Fog desnity',
         },
     
         playerAcceleration: {
-            get: function() {
-                return 'Player acceleration', window.ENGINE.configs.acceleration
-            },
-            set: function(value) {
-                window.ENGINE.configs.acceleration = value
-                return this.get()
-            }
+            variable: 'window.ENGINE.configs.acceleration',
+            description: 'Player acceleration',
         },
     
         playerFriction: {
-            get: function() {
-                return 'Player friction', window.ENGINE.configs.friction
-            },
-            set: function(value) {
-                window.ENGINE.configs.friction = value
-                return this.get()
-            }
+            variable: 'window.ENGINE.configs.friction',
+            description: 'Player friction',
         },
     
         lookSensitivity: {
-            get: function() {
-                return 'Look sensitivity', window.ENGINE.configs.lookSensitivity
-            },
-            set: function(value) {
-                window.ENGINE.configs.lookSensitivity = value
-                return this.get()
-            }
+            variable: 'window.ENGINE.configs.lookSensitivity',
+            description: 'Look sensitivity',
         }
     }
 
+    for (let setting in consoleFunctions) { // I know eval is evil, sorry
+        let settingObject = consoleFunctions[setting]
+        consoleFunctions[setting].get = function() {
+            return eval(settingObject.variable)
+        }
+        consoleFunctions[setting].set = function (value) {
+            eval(settingObject.variable + '=' + value)
+            if(settingObject.reloadProjection) {
+                window.ENGINE.camera.updateProjectionMatrix()
+            }
+            return eval(settingObject.variable)
+        }
+    }
     return consoleFunctions
 }
-
-
 
 export { initConsoleFunctions }
