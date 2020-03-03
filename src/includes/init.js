@@ -16,7 +16,6 @@ function initEngine() {
         configs: configs,
         KEYCHECK: KEYCHECK,
         UTILS: UTILS,
-        // consoleFunctions: consoleFunctions,
         GLTFloader: new GLTFLoader(),
         renderer: new window.THREE.WebGLRenderer({antialias: true})
     }
