@@ -9,7 +9,7 @@ import { initEngine } from './includes/init.js'
 import { addSettings } from './includes/settings-manager.js'
 import { initPlayerControls, playerControls } from './includes/player-controls.js'
 import { buildLevel } from './includes/build-level.js'
-import { buildCollidables } from './includes/build.collidables'
+import { buildCollidables } from './includes/build-collidables.js'
 import { initPlayer } from './includes/player-object.js'
 
 initEngine()

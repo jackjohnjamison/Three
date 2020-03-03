@@ -1,3 +1,5 @@
+import { handleCollisions } from './handle-collisions.js' 
+
 document.body.requestPointerLock // = document.body.requestPointerLock || document.body.mozRequestPointerLock || document.body.webkitRequestPointerLock
 
 let movementX = 0
@@ -15,6 +17,14 @@ let arrowBack = function() {}
 let arrowRight = function() {}
 let arrowLeft = function() {}
 let quaterTurn = 0
+
+// To do - rename and move to cfg?
+const playerCollideObj = {
+    position: null,
+    width: 40,
+    depth: 40,
+    height: 100
+}
 
 
 function pointerLock() {
@@ -67,8 +77,15 @@ function playerControls(configs, player, camera, collidables) {
     xVelocity -= (configs.acceleration * Math.sin(player.rotation.y + quaterTurn)) * arrowLeft()
     xVelocity += (configs.acceleration * Math.sin(player.rotation.y + quaterTurn)) * arrowRight()
     
-    player.position.z += zVelocity
-    player.position.x += xVelocity
+    // To do - remove when handleCollisions working
+    // player.position.z += zVelocity
+    // player.position.x += xVelocity
+
+    // To do - rename & refactor once working
+    playerCollideObj.position = player.position
+    let newPlayerPos = handleCollisions(playerCollideObj, zVelocity, xVelocity, collidables)
+    player.position.z = newPlayerPos.z
+    player.position.x += newPlayerPos.x
 
     
     if(pointerLocked && timeStamp !== timeStampPrev) {
