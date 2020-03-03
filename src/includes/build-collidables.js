@@ -1,0 +1,5 @@
+function buildCollidables() {
+
+}
+
+export { buildCollidables }
