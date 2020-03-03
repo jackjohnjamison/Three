@@ -53,7 +53,7 @@ function initPlayerControls(KEYCHECK, UTILS, player) {
     quaterTurn = window.ENGINE.UTILS.degreesToRadians(90)
 }
 
-function playerControls(configs, player, camera) {
+function playerControls(configs, player, camera, collidables) {
 
     zVelocity -= (configs.acceleration * Math.cos(player.rotation.y)) * arrowFoward()
     zVelocity += (configs.acceleration * Math.cos(player.rotation.y)) * arrowBack()
