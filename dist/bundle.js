@@ -133,18 +133,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./src/includes/console.js":
-/*!*********************************!*\
-  !*** ./src/includes/console.js ***!
-  \*********************************/
-/*! exports provided: initConsoleFunctions */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"initConsoleFunctions\", function() { return initConsoleFunctions; });\nfunction initConsoleFunctions() {\r\n\r\n    const consoleFunctions = {\r\n        viewDistance: {variable: 'window.ENGINE.camera.far',\r\n            description: 'View distance',\r\n            reloadProjection: true\r\n        },\r\n\r\n        fov: {            \r\n            variable: 'window.ENGINE.camera.fov',\r\n            description: 'Field of view',\r\n            reloadProjection: true\r\n        },\r\n    \r\n        nearPlane: {\r\n            variable: 'window.ENGINE.camera.near',\r\n            description: 'Near plane',\r\n            reloadProjection: true\r\n        },\r\n    \r\n        fogDensity: {\r\n            variable: 'window.scene.fog.density',\r\n            description: 'Fog desnity',\r\n        },\r\n    \r\n        playerAcceleration: {\r\n            variable: 'window.ENGINE.configs.acceleration',\r\n            description: 'Player acceleration',\r\n        },\r\n    \r\n        playerFriction: {\r\n            variable: 'window.ENGINE.configs.friction',\r\n            description: 'Player friction',\r\n        },\r\n    \r\n        lookSensitivity: {\r\n            variable: 'window.ENGINE.configs.lookSensitivity',\r\n            description: 'Look sensitivity',\r\n        }\r\n    }\r\n\r\n    for (let setting in consoleFunctions) { // I know eval is evil, sorry\r\n        let settingObject = consoleFunctions[setting]\r\n        consoleFunctions[setting].get = function() {\r\n            return eval(settingObject.variable)\r\n        }\r\n        consoleFunctions[setting].set = function (value) {\r\n            eval(settingObject.variable + '=' + value)\r\n            if(settingObject.reloadProjection) {\r\n                window.ENGINE.camera.updateProjectionMatrix()\r\n            }\r\n            return eval(settingObject.variable)\r\n        }\r\n    }\r\n    return consoleFunctions\r\n}\r\n\r\n\n\n//# sourceURL=webpack:///./src/includes/console.js?");
-
-/***/ }),
-
 /***/ "./src/includes/game-loop.js":
 /*!***********************************!*\
   !*** ./src/includes/game-loop.js ***!
@@ -205,6 +193,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
+/***/ "./src/includes/settings.js":
+/*!**********************************!*\
+  !*** ./src/includes/settings.js ***!
+  \**********************************/
+/*! exports provided: initSettings */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"initSettings\", function() { return initSettings; });\nfunction initSettings() {\r\n\r\n    const settings = {\r\n        viewDistance: {variable: 'window.ENGINE.camera.far',\r\n            description: 'View distance',\r\n            reloadProjection: true\r\n        },\r\n\r\n        fov: {            \r\n            variable: 'window.ENGINE.camera.fov',\r\n            description: 'Field of view',\r\n            reloadProjection: true\r\n        },\r\n    \r\n        nearPlane: {\r\n            variable: 'window.ENGINE.camera.near',\r\n            description: 'Near plane',\r\n            reloadProjection: true\r\n        },\r\n    \r\n        fogDensity: {\r\n            variable: 'window.scene.fog.density',\r\n            description: 'Fog desnity',\r\n        },\r\n    \r\n        playerAcceleration: {\r\n            variable: 'window.ENGINE.configs.acceleration',\r\n            description: 'Player acceleration',\r\n        },\r\n    \r\n        playerFriction: {\r\n            variable: 'window.ENGINE.configs.friction',\r\n            description: 'Player friction',\r\n        },\r\n    \r\n        lookSensitivity: {\r\n            variable: 'window.ENGINE.configs.lookSensitivity',\r\n            description: 'Look sensitivity',\r\n        }\r\n    }\r\n\r\n    for (let setting in settings) { // I know eval is evil, sorry\r\n        let settingObject = settings[setting]\r\n\r\n        settingObject.get = function() {\r\n            return eval(settingObject.variable)\r\n        }\r\n        \r\n        settingObject.set = function (value) {\r\n            eval(settingObject.variable + '=' + value)\r\n            if(settingObject.reloadProjection) {\r\n                window.ENGINE.camera.updateProjectionMatrix()\r\n            }\r\n            return settingObject.get()\r\n        }\r\n    }\r\n    return settings\r\n}\r\n\r\n\n\n//# sourceURL=webpack:///./src/includes/settings.js?");
+
+/***/ }),
+
 /***/ "./src/includes/utils.js":
 /*!*******************************!*\
   !*** ./src/includes/utils.js ***!
@@ -225,7 +225,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _includes_console_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./includes/console.js */ \"./src/includes/console.js\");\n/* harmony import */ var _includes_init_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./includes/init.js */ \"./src/includes/init.js\");\n/* harmony import */ var _includes_player_object_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./includes/player-object.js */ \"./src/includes/player-object.js\");\n/* harmony import */ var _includes_player_controls_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./includes/player-controls.js */ \"./src/includes/player-controls.js\");\n/* harmony import */ var _includes_build_level_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./includes/build-level.js */ \"./src/includes/build-level.js\");\n/* harmony import */ var _includes_game_loop_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./includes/game-loop.js */ \"./src/includes/game-loop.js\");\n  //////////////////////////////////////////////////////\r\n ///    threeJS FPS                     ***\r\n//////////////////////////////////////////////////////\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nObject(_includes_init_js__WEBPACK_IMPORTED_MODULE_1__[\"initEngine\"])()\r\nObject(_includes_player_object_js__WEBPACK_IMPORTED_MODULE_2__[\"initPlayer\"])()\r\nObject(_includes_player_controls_js__WEBPACK_IMPORTED_MODULE_3__[\"initPlayerControls\"])()\r\nObject(_includes_build_level_js__WEBPACK_IMPORTED_MODULE_4__[\"buildLevel\"])()\r\nObject(_includes_game_loop_js__WEBPACK_IMPORTED_MODULE_5__[\"animate\"])()\r\n\r\nwindow.consoleFunctions = Object(_includes_console_js__WEBPACK_IMPORTED_MODULE_0__[\"initConsoleFunctions\"])()\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _includes_init_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./includes/init.js */ \"./src/includes/init.js\");\n/* harmony import */ var _includes_player_object_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./includes/player-object.js */ \"./src/includes/player-object.js\");\n/* harmony import */ var _includes_player_controls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./includes/player-controls.js */ \"./src/includes/player-controls.js\");\n/* harmony import */ var _includes_build_level_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./includes/build-level.js */ \"./src/includes/build-level.js\");\n/* harmony import */ var _includes_settings_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./includes/settings.js */ \"./src/includes/settings.js\");\n/* harmony import */ var _includes_game_loop_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./includes/game-loop.js */ \"./src/includes/game-loop.js\");\n  //////////////////////////////////////////////////////\r\n ///    threeJS FPS                     ***\r\n//////////////////////////////////////////////////////\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\nObject(_includes_init_js__WEBPACK_IMPORTED_MODULE_0__[\"initEngine\"])()\r\nObject(_includes_player_object_js__WEBPACK_IMPORTED_MODULE_1__[\"initPlayer\"])()\r\nObject(_includes_player_controls_js__WEBPACK_IMPORTED_MODULE_2__[\"initPlayerControls\"])()\r\nObject(_includes_build_level_js__WEBPACK_IMPORTED_MODULE_3__[\"buildLevel\"])()\r\nObject(_includes_game_loop_js__WEBPACK_IMPORTED_MODULE_5__[\"animate\"])()\r\n\r\nwindow.gameSettings = Object(_includes_settings_js__WEBPACK_IMPORTED_MODULE_4__[\"initSettings\"])()\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ })
 

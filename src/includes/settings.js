@@ -1,6 +1,6 @@
-function initConsoleFunctions() {
+function initSettings() {
 
-    const consoleFunctions = {
+    const settings = {
         viewDistance: {variable: 'window.ENGINE.camera.far',
             description: 'View distance',
             reloadProjection: true
@@ -39,20 +39,22 @@ function initConsoleFunctions() {
         }
     }
 
-    for (let setting in consoleFunctions) { // I know eval is evil, sorry
-        let settingObject = consoleFunctions[setting]
-        consoleFunctions[setting].get = function() {
+    for (let setting in settings) { // I know eval is evil, sorry
+        let settingObject = settings[setting]
+
+        settingObject.get = function() {
             return eval(settingObject.variable)
         }
-        consoleFunctions[setting].set = function (value) {
+        
+        settingObject.set = function (value) {
             eval(settingObject.variable + '=' + value)
             if(settingObject.reloadProjection) {
                 window.ENGINE.camera.updateProjectionMatrix()
             }
-            return eval(settingObject.variable)
+            return settingObject.get()
         }
     }
-    return consoleFunctions
+    return settings
 }
 
-export { initConsoleFunctions }
+export { initSettings }
