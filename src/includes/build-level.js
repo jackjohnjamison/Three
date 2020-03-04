@@ -17,15 +17,20 @@ function buildLevel() {
     }
     
 
-    for(let i = 0; i < treeRows; i++) {
-        let treeX = 0 + treeInterval * i
+    GLTFloader.load( 'dist/models/tree/scene.gltf', function(gltf){
+        let platonicTree = gltf.scene
+        randomForest(platonicTree)
+    }, undefined, function(error){
+        console.error( error )
+    })
 
-        for(let j = 0; j < treeRows; j++) {
-            let treeZ = 0 + treeInterval * j
+    function randomForest(platonicTree) {
+        for(let i = 0; i < treeRows; i++) {
+            let treeX = 0 + treeInterval * i
 
-            GLTFloader.load( 'dist/models/tree/scene.gltf', function(gltf){
-                scene.add(gltf.scene)
-                let tree = gltf.scene
+            for(let j = 0; j < treeRows; j++) {
+                let treeZ = 0 + treeInterval * j
+                let tree = platonicTree.clone()
                 tree.name = 'Tree ' + i + ' ' + j
                 tree.position.x = treeX + addRandom(treeSpaceRandomizer)
                 tree.position.z = treeZ + addRandom(treeSpaceRandomizer)
@@ -33,9 +38,8 @@ function buildLevel() {
                 tree.scale.x = treeScale + addRandom(treeScaleRandomizer)
                 tree.scale.y = treeScale + addRandom(treeScaleRandomizer)
                 tree.scale.z = treeScale + addRandom(treeScaleRandomizer)
-            }, undefined, function(error){
-                console.error( error )
-            })
+                scene.add(tree)
+            }
         }
     }
 
@@ -55,7 +59,6 @@ function buildLevel() {
     }, undefined, function(error){
         console.error( error )
     })
-
 
     // Floor
 

@@ -1,76 +1,60 @@
-const settings = {
+function initSettings() {
 
-// Veiw distance
-    viewDistance: {
-        interval: 100,
-        objectProperty: 'far',
-        type: 'Camera',
-        keyCode: 86, // V
-        description: 'View distance'
-    },
+    const settings = {
+        viewDistance: {variable: 'window.ENGINE.camera.far',
+            description: 'View distance',
+            reloadProjection: true
+        },
 
-// field of view
-    fov: {
-        interval: 5,
-        objectProperty: 'fov',
-        type: 'Camera',
-        keyCode: 70, // F
-        description: 'Field of view'
-    },
-
-// Near plane
-    nearPlane: {
-        interval: 2,
-        objectProperty: 'near',
-        type: 'Camera',
-        keyCode: 78, // N
-        description: 'Near plane'
-    },
-
-// Fog start
-    fogStart: {
-        interval: 50,
-        objectProperty: 'near',
-        type: 'Scene fog',
-        keyCode: 79, // O
-        description: 'Fog start'
-    },
-
-// Fog end
-    fogEnd: {
-        interval: 50,
-        objectProperty: 'far',
-        type: 'Scene fog',
-        keyCode: 80, // P
-        description: 'Fog end'
-    },
-
-// Player acceleration
-    acceleration: {
-        interval: .1,
-        objectProperty: 'acceleration',
-        type: 'Player controls',
-        keyCode: 90, // Z
-        description: 'Player acceleration'
-    },
-
-// Player friction
-    friction: {
-        interval: .01,
-        objectProperty: 'friction',
-        type: 'Player controls',
-        keyCode: 75, // K
-        description: 'Player friction'
-    },
-
-// lookSensitivity
-    lookSensitivity: {
-        interval: .01,
-        objectProperty: 'lookSensitivity',
-        type: 'Player controls',
-        keyCode: 76, // L
-        description: 'lookSensitivity'
+        fov: {            
+            variable: 'window.ENGINE.camera.fov',
+            description: 'Field of view',
+            reloadProjection: true
+        },
+    
+        nearPlane: {
+            variable: 'window.ENGINE.camera.near',
+            description: 'Near plane',
+            reloadProjection: true
+        },
+    
+        fogDensity: {
+            variable: 'window.scene.fog.density',
+            description: 'Fog desnity',
+        },
+    
+        playerAcceleration: {
+            variable: 'window.ENGINE.configs.acceleration',
+            description: 'Player acceleration',
+        },
+    
+        playerFriction: {
+            variable: 'window.ENGINE.configs.friction',
+            description: 'Player friction',
+        },
+    
+        lookSensitivity: {
+            variable: 'window.ENGINE.configs.lookSensitivity',
+            description: 'Look sensitivity',
+        }
     }
+
+    for (let setting in settings) { // I know eval is evil, sorry
+        let settingObject = settings[setting]
+
+        settingObject.get = function() {
+            return eval(settingObject.variable)
+        }
+        
+        settingObject.set = function (value) {
+            eval(settingObject.variable + '=' + value)
+            if(settingObject.reloadProjection) {
+                window.ENGINE.camera.updateProjectionMatrix()
+            }
+            return settingObject.get()
+        }
+    }
+    return settings
 }
 
-export { settings }
+export { initSettings }

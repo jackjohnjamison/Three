@@ -1,27 +1,27 @@
+import * as THREE from 'three'
 import { configs } from './configs.js'
 import { KEYCHECK } from './key-check.js'
 import * as UTILS from './utils.js'
-import GLTFLoader from 'three-gltf-loader';
+import GLTFLoader from 'three-gltf-loader'
 
 function initEngine() {
 
-    window.ENGINE = {}
+    window.THREE = THREE
 
-    window.ENGINE.configs = configs
-    window.ENGINE.KEYCHECK = KEYCHECK
-    window.ENGINE.UTILS = UTILS
+    window.scene = new window.THREE.Scene({name: 'Root scene'})
 
-    window.scene = new window.THREE.Scene()
-    window.scene.name = 'Root scene'
-    
-    window.ENGINE.GLTFloader = new GLTFLoader()
-    
-    window.ENGINE.renderer = new window.THREE.WebGLRenderer({antialias: true})
+    window.scene.fog = new THREE.FogExp2( configs.fogColour, configs.fogDensity)
+
+    window.ENGINE = {
+        configs: configs,
+        KEYCHECK: KEYCHECK,
+        UTILS: UTILS,
+        GLTFloader: new GLTFLoader(),
+        renderer: new window.THREE.WebGLRenderer({antialias: true})
+    }
+
     window.ENGINE.renderer.setSize(configs.screenWidth, configs.screenHeight)
     window.ENGINE.renderer.setClearColor(configs.clearColour)
-    
-    window.scene.fog = new THREE.FogExp2( configs.fogColour, configs.fogDensity) // Alternative fog function
-    
     configs.parentElemnt.append(window.ENGINE.renderer.domElement)
 }
 

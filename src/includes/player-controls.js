@@ -38,10 +38,6 @@ function initPlayerControls(KEYCHECK, UTILS, player) {
         if (event.keyCode === 13) {
             pointerLock()
         }
-        if (event.keyCode === 81) {
-            console.log('Player X', player.position.x)
-            console.log('Player Z', player.position.z)
-        }
     })
 
     arrowFoward = function(){return window.ENGINE.KEYCHECK(87)}
