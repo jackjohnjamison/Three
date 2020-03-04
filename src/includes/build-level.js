@@ -81,7 +81,7 @@ function buildLevel() {
 
     // Sexy box
 
-    const boxDimension = 200
+    const boxDimension = 100
 
     // const boxTimesToRepeatHorizontally = boxDimension / 1000
     // const boxTimesToRepeatVertically = boxDimension / 1000
