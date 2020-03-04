@@ -1,59 +1,31 @@
 function initSettings() {
 
-    const settings = {
-        viewDistance: {variable: 'window.ENGINE.camera.far',
-            description: 'View distance',
-            reloadProjection: true
-        },
-
-        fov: {            
-            variable: 'window.ENGINE.camera.fov',
-            description: 'Field of view',
-            reloadProjection: true
-        },
-    
-        nearPlane: {
-            variable: 'window.ENGINE.camera.near',
-            description: 'Near plane',
-            reloadProjection: true
-        },
-    
-        fogDensity: {
-            variable: 'window.scene.fog.density',
-            description: 'Fog desnity',
-        },
-    
-        playerAcceleration: {
-            variable: 'window.ENGINE.configs.acceleration',
-            description: 'Player acceleration',
-        },
-    
-        playerFriction: {
-            variable: 'window.ENGINE.configs.friction',
-            description: 'Player friction',
-        },
-    
-        lookSensitivity: {
-            variable: 'window.ENGINE.configs.lookSensitivity',
-            description: 'Look sensitivity',
-        }
-    }
-
-    for (let setting in settings) { // I know eval is evil, sorry
-        let settingObject = settings[setting]
-
-        settingObject.get = function() {
-            return eval(settingObject.variable)
-        }
-        
-        settingObject.set = function (value) {
-            eval(settingObject.variable + '=' + value)
-            if(settingObject.reloadProjection) {
-                window.ENGINE.camera.updateProjectionMatrix()
+    class setting {
+        constructor (variable, description, reloadProjection = false) {
+            this.get = function() {
+                return description, eval(variable)
             }
-            return settingObject.get()
+            
+            this.set = function (value) {
+                eval(variable + '=' + value)
+                if(reloadProjection) {
+                    window.ENGINE.camera.updateProjectionMatrix()
+                }
+                return this.get()
+            }
         }
     }
+
+    const settings = {
+        viewDistance: new setting('window.ENGINE.camera.far', 'View distance', true),
+        fov: new setting('window.ENGINE.camera.fov', 'Field of view', true),
+        nearPlane: new setting('window.ENGINE.camera.near', 'Near plane', true),
+        fogDensity: new setting('window.scene.fog.density', 'Fog desnity'),
+        playerAcceleration: new setting('window.ENGINE.configs.acceleration', 'Player acceleration'),
+        playerFriction: new setting('window.ENGINE.configs.friction', 'Player friction'),
+        lookSensitivity:  new setting('window.ENGINE.configs.lookSensitivity', 'Look sensitivity')
+    }
+
     return settings
 }
 
