@@ -41,20 +41,20 @@ function buildLevel() {
 
     // Arch
 
-    ENGINE.GLTFloader.load( 'dist/models/arch/scene.gltf', function(gltf){
-        scene.add(gltf.scene)
-        let arch = gltf.scene
-        arch.name = 'Arch'
-        arch.position.x = 200
-        arch.position.z = -1500
-        arch.position.y = 170
-        arch.scale.x = 80
-        arch.scale.y = 80
-        arch.scale.z = 80
+    // ENGINE.GLTFloader.load( 'dist/models/arch/scene.gltf', function(gltf){
+    //     scene.add(gltf.scene)
+    //     let arch = gltf.scene
+    //     arch.name = 'Arch'
+    //     arch.position.x = 200
+    //     arch.position.z = -1500
+    //     arch.position.y = 170
+    //     arch.scale.x = 80
+    //     arch.scale.y = 80
+    //     arch.scale.z = 80
 
-    }, undefined, function(error){
-        console.error( error )
-    })
+    // }, undefined, function(error){
+    //     console.error( error )
+    // })
 
     // Floor
 
@@ -63,21 +63,40 @@ function buildLevel() {
     const floorZDimension = 100000
 
     const grassTexture = texLoader.load('dist/images/grass2.jpg')
-    grassTexture.wrapS = THREE.RepeatWrapping;
-    grassTexture.wrapT = THREE.RepeatWrapping;
+    grassTexture.wrapS = THREE.RepeatWrapping
+    grassTexture.wrapT = THREE.RepeatWrapping
 
     const timesToRepeatHorizontally = floorXDimension / 1000
     const timesToRepeatVertically = floorZDimension / 1000
     grassTexture.repeat.set(timesToRepeatHorizontally, timesToRepeatVertically)
 
-    var floorGeometry = new THREE.BoxGeometry(floorXDimension, 0, floorZDimension)
+    var floorGeometry = new THREE.BoxBufferGeometry(floorXDimension, 0, floorZDimension)
     var floorMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
     var floor = new THREE.Mesh( floorGeometry, floorMaterial )
     floor.name = 'Floor'
     
     scene.add(floor)
 
-    floor.position.y = -8
+    floor.position.y = -8 // Fix this bullshit
+
+    // Sexy box
+
+    const boxDimension = 200
+
+    // const boxTimesToRepeatHorizontally = boxDimension / 1000
+    // const boxTimesToRepeatVertically = boxDimension / 1000
+    // grassTexture.repeat.set(boxTimesToRepeatHorizontally, boxTimesToRepeatVertically)
+
+
+    var boxGeometry = new THREE.BoxBufferGeometry(boxDimension, boxDimension, boxDimension)
+    var boxMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
+    var box = new THREE.Mesh( boxGeometry, boxMaterial )
+    box.name = 'Sexy box'
+
+    box.position.z = -1500
+    box.position.y = boxDimension / 2
+    
+    scene.add(box)
 
 
     //////////////////////////////////////////////////////////////

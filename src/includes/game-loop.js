@@ -1,31 +1,63 @@
 import { playerControls } from './player-controls.js'
 
-// var raycaster = new THREE.Raycaster();
-// var mouse = new THREE.Vector2();
+let raycaster
+let mouse
+let onMouseMove
+let intersects
+let downRay
+let intersectsDown
 
-// function onMouseMove( event ) {
+let fakeMouse = {
+    x: 0, 
+    y: 0
+}
 
-// 	// calculate mouse position in normalized device coordinates
-// 	// (-1 to +1) for both components
+function initAnimate() {
 
-// 	mouse.x = ( event.clientX / innerWidth ) * 2 - 1;
-// 	mouse.y = - ( event.clientY / innerHeight ) * 2 + 1;
+    raycaster = new THREE.Raycaster()
+    mouse = new THREE.Vector2()
 
-// }
+    downRay = new THREE.Raycaster()
+
+    onMouseMove = function(event) {
+    
+        mouse.x = ( event.clientX / innerWidth ) * 2 - 1
+        mouse.y = - ( event.clientY / innerHeight ) * 2 + 1
+    
+    }
+
+    var material = new THREE.LineBasicMaterial( { color: 0x0000ff } )
+    
+
+    window.addEventListener( 'mousemove', onMouseMove, false )
+    window.addEventListener( 'click', function() {
+
+        var points = [];
+        points.push(new THREE.Vector3( ENGINE.player.position.x, ENGINE.player.position.y -10, ENGINE.player.position.z ))
+        points.push( intersects[0].point )
+
+        var geometry = new THREE.BufferGeometry().setFromPoints( points );
+
+        var line = new THREE.Line( geometry, material )
+
+        scene.add( line )
+
+        console.log(intersectsDown[0])
+    }, false )
+}
+
 
 var animate = function() {
 
-    // 	// update the picking ray with the camera and mouse position
-	// raycaster.setFromCamera( mouse, camera );
+    raycaster.setFromCamera( mouse, ENGINE.camera )
 
-	// // calculate objects intersecting the picking ray
-	// var intersects = raycaster.intersectObjects( scene.children );
+    downRay.setFromCamera( fakeMouse, ENGINE.camera )
+    
+    // console.log(raycaster)
 
-	// for ( var i = 0; i < intersects.length; i++ ) {
+    intersects = raycaster.intersectObjects( scene.children )
 
-	// 	intersects[ i ].object.material.color.set( 0xff0000 );
-
-	// }
+    intersectsDown = downRay.intersectObjects( scene.children )
 
     playerControls(ENGINE.configs, ENGINE.player, ENGINE.camera)
 
@@ -33,4 +65,4 @@ var animate = function() {
     requestAnimationFrame(animate)
 }
 
-export { animate }
+export { initAnimate, animate }
