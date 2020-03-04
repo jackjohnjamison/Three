@@ -1,11 +1,11 @@
 
 function initPlayer() {
-    const configs = window.ENGINE.configs
+    const configs = ENGINE.configs
 
-    const player = window.ENGINE.player = new window.THREE.Object3D()
+    const player = ENGINE.player = new THREE.Object3D()
     player.name = 'Player root object'
     
-    const camera = window.ENGINE.camera = new window.THREE.PerspectiveCamera( configs.fov, configs.screenWidth/configs.screenHeight, configs.nearPlane, configs.viewDistance)
+    const camera = ENGINE.camera = new THREE.PerspectiveCamera( configs.fov, configs.screenWidth/configs.screenHeight, configs.nearPlane, configs.viewDistance)
     camera.name = 'Player view'
     player.add(camera)
     scene.add(player)
@@ -13,7 +13,7 @@ function initPlayer() {
     player.position.y = 200
     player.rotation.y = 3
     
-    window.ENGINE.GLTFloader.load( 'dist/models/fn2000/scene.gltf', function(gltf){
+    ENGINE.GLTFloader.load( 'dist/models/fn2000/scene.gltf', function(gltf){
         camera.add(gltf.scene)
         let rightHand = gltf.scene
         rightHand.name = 'Right hand'

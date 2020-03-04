@@ -1,8 +1,8 @@
 const configs = {
 
     parentElemnt: document.body,
-    screenHeight: window.innerHeight,
-    screenWidth: window.innerWidth,
+    screenHeight: innerHeight,
+    screenWidth: innerWidth,
 
     viewDistance: 2000,
     fov: 75,

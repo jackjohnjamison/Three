@@ -40,12 +40,12 @@ function initPlayerControls(KEYCHECK, UTILS, player) {
         }
     })
 
-    arrowFoward = function(){return window.ENGINE.KEYCHECK(87)}
-    arrowBack = function(){return window.ENGINE.KEYCHECK(83)}
-    arrowRight = function(){return window.ENGINE.KEYCHECK(68)}
-    arrowLeft = function(){return window.ENGINE.KEYCHECK(65)}
+    arrowFoward = function(){return ENGINE.KEYCHECK(87)}
+    arrowBack = function(){return ENGINE.KEYCHECK(83)}
+    arrowRight = function(){return ENGINE.KEYCHECK(68)}
+    arrowLeft = function(){return ENGINE.KEYCHECK(65)}
 
-    quaterTurn = window.ENGINE.UTILS.degreesToRadians(90)
+    quaterTurn = ENGINE.UTILS.degreesToRadians(90)
 }
 
 function playerControls(configs, player, camera) {

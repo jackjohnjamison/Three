@@ -1,9 +1,5 @@
 function buildLevel() {
 
-    const scene = window.scene
-    const THREE = window.THREE
-    const GLTFloader = window.ENGINE.GLTFloader
-
     // Tree printer
 
     const treeRows = 10
@@ -17,7 +13,7 @@ function buildLevel() {
     }
     
 
-    GLTFloader.load( 'dist/models/tree/scene.gltf', function(gltf){
+    ENGINE.GLTFloader.load( 'dist/models/tree/scene.gltf', function(gltf){
         let platonicTree = gltf.scene
         randomForest(platonicTree)
     }, undefined, function(error){
@@ -45,7 +41,7 @@ function buildLevel() {
 
     // Arch
 
-    GLTFloader.load( 'dist/models/arch/scene.gltf', function(gltf){
+    ENGINE.GLTFloader.load( 'dist/models/arch/scene.gltf', function(gltf){
         scene.add(gltf.scene)
         let arch = gltf.scene
         arch.name = 'Arch'
