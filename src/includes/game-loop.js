@@ -1,8 +1,6 @@
 import { playerControls } from './player-controls.js'
 import { findRayCollisions } from './raycaster.js'
 
-
-
 var animate = function() {
 
     findRayCollisions()

@@ -18,6 +18,8 @@ const configs = {
 
     acceleration: 2,
     friction: 0.9,
+    jumpPower: 25,
+    gravity: 1.1,
     lookSensitivity: 0.02
 }
 

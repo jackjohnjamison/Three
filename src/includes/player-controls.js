@@ -1,4 +1,3 @@
-document.body.requestPointerLock
 let movementX = 0
 let movementY = 0
 
@@ -9,8 +8,9 @@ let pointerLocked = false
 let xVelocity = 0
 let zVelocity = 0
 
-let deg90
+let yVelocity = 0
 
+let deg90
 
 function pointerLock() {
     document.body.requestPointerLock()
@@ -28,15 +28,23 @@ function pointerLock() {
     })
 }
 
+function jump() {
+    yVelocity += ENGINE.configs.jumpPower
+}
 
 function initPlayerControls() {
+    deg90 = ENGINE.UTILS.degreesToRadians(90)
+
     document.addEventListener('keydown', event => {
-        if (event.keyCode === 13) {
-            pointerLock()
+        switch(event.keyCode) {
+            case 13:
+                pointerLock()
+                break
+            case 32:
+                jump()
+                break
         }
     })
-
-    deg90 = ENGINE.UTILS.degreesToRadians(90)
 }
 
 
@@ -59,6 +67,8 @@ function playerControls(configs, player, camera) {
     player.position.x += xVelocity
     player.position.z += zVelocity
 
+
+
     
     if(pointerLocked && timeStamp !== timeStampPrev) {
         player.rotation.y -= movementX * configs.lookSensitivity
@@ -70,6 +80,20 @@ function playerControls(configs, player, camera) {
     
     zVelocity *= configs.friction
     xVelocity *= configs.friction
+
+    yVelocity -= configs.gravity
+    player.position.y += yVelocity
+    
+    
+    if (player.position.y < 200) {
+        console.log('i ran')
+        yVelocity = 0
+        player.position.y = 200
+    }
+
+    
+
+    console.log(player.position.y)
 }
 
 export { initPlayerControls, playerControls }
