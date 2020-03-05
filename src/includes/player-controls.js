@@ -9,11 +9,7 @@ let pointerLocked = false
 let xVelocity = 0
 let zVelocity = 0
 
-let arrowFoward = function() {}
-let arrowBack = function() {}
-let arrowRight = function() {}
-let arrowLeft = function() {}
-let quaterTurn = 0
+let deg90
 
 
 function pointerLock() {
@@ -33,44 +29,42 @@ function pointerLock() {
 }
 
 
-function initPlayerControls(KEYCHECK, UTILS, player) {
+function initPlayerControls() {
     document.addEventListener('keydown', event => {
         if (event.keyCode === 13) {
             pointerLock()
         }
     })
 
-    arrowFoward = function(){return ENGINE.KEYCHECK(87)}
-    arrowBack = function(){return ENGINE.KEYCHECK(83)}
-    arrowRight = function(){return ENGINE.KEYCHECK(68)}
-    arrowLeft = function(){return ENGINE.KEYCHECK(65)}
-
-    quaterTurn = ENGINE.UTILS.degreesToRadians(90)
+    deg90 = ENGINE.UTILS.degreesToRadians(90)
 }
+
 
 function playerControls(configs, player, camera) {
 
-    zVelocity -= (configs.acceleration * Math.cos(player.rotation.y)) * arrowFoward()
-    zVelocity += (configs.acceleration * Math.cos(player.rotation.y)) * arrowBack()
+    const arrowForward = ENGINE.KEYCHECK(87)
+    const arrowBack = ENGINE.KEYCHECK(83)
+    const arrowRight = ENGINE.KEYCHECK(68)
+    const arrowLeft = ENGINE.KEYCHECK(65)
 
-    xVelocity -= (configs.acceleration * Math.sin(player.rotation.y)) * arrowFoward()
-    xVelocity += (configs.acceleration * Math.sin(player.rotation.y)) * arrowBack()
+    const cosY = Math.cos(player.rotation.y)
+    const cosYDeg90 = Math.cos(player.rotation.y + deg90)
 
-    zVelocity -= (configs.acceleration * Math.cos(player.rotation.y + quaterTurn)) * arrowLeft()
-    zVelocity += (configs.acceleration * Math.cos(player.rotation.y + quaterTurn)) * arrowRight()
+    const sinY = Math.sin(player.rotation.y)
+    const sinYDeg90 = Math.sin(player.rotation.y + deg90)
 
-    xVelocity -= (configs.acceleration * Math.sin(player.rotation.y + quaterTurn)) * arrowLeft()
-    xVelocity += (configs.acceleration * Math.sin(player.rotation.y + quaterTurn)) * arrowRight()
+    xVelocity += (configs.acceleration * sinYDeg90 * arrowRight) - (configs.acceleration * sinYDeg90 * arrowLeft) + (configs.acceleration * sinY * arrowBack) - (configs.acceleration * sinY * arrowForward)
+    zVelocity += (configs.acceleration * cosYDeg90 * arrowRight) - (configs.acceleration * cosYDeg90 * arrowLeft) + (configs.acceleration * cosY * arrowBack) - (configs.acceleration * cosY * arrowForward)
     
-    player.position.z += zVelocity
     player.position.x += xVelocity
+    player.position.z += zVelocity
 
     
     if(pointerLocked && timeStamp !== timeStampPrev) {
         player.rotation.y -= movementX * configs.lookSensitivity
         camera.rotation.x -= movementY * configs.lookSensitivity
 
-        camera.rotation.x = Math.max(Math.min(camera.rotation.x, quaterTurn), -quaterTurn)
+        camera.rotation.x = Math.max(Math.min(camera.rotation.x, deg90), -deg90)
     }
     timeStampPrev = timeStamp
     
