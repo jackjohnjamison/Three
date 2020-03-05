@@ -14,7 +14,6 @@ initPlayer()
 initPlayerControls()
 buildLevel()
 
-initAnimate()
 initRays()
 
 animate()
