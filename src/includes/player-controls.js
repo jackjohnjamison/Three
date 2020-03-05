@@ -85,15 +85,10 @@ function playerControls(configs, player, camera) {
     player.position.y += yVelocity
     
     
-    if (player.position.y < 200) {
-        console.log('i ran')
+    if (player.position.y < ENGINE.configs.playerHeight) {
         yVelocity = 0
-        player.position.y = 200
+        player.position.y = ENGINE.configs.playerHeight
     }
-
-    
-
-    console.log(player.position.y)
 }
 
 export { initPlayerControls, playerControls }

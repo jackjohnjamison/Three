@@ -16,6 +16,7 @@ const configs = {
     clearColour: 0x001c0c, // Scene background colour
     fogColour: 0x001c0c,
 
+    playerHeight: 200,
     acceleration: 2,
     friction: 0.9,
     jumpPower: 25,

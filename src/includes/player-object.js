@@ -10,7 +10,7 @@ function initPlayer() {
     player.add(camera)
     scene.add(player)
     player.position.z = -1000
-    player.position.y = 200
+    player.position.y = ENGINE.configs.playerHeight
     player.rotation.y = 3
     
     ENGINE.GLTFloader.load( 'dist/models/fn2000/scene.gltf', function(gltf){
