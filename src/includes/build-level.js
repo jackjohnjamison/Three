@@ -7,10 +7,6 @@ function buildLevel() {
     const treeSpaceRandomizer = 550
     const treeScaleRandomizer = 20
     const treeScale = 30
-
-    function addRandom(range) {
-        return (Math.random() * range) - (range / 2)
-    }
     
 
     ENGINE.GLTFloader.load( 'dist/models/tree/scene.gltf', function(gltf){
@@ -28,33 +24,16 @@ function buildLevel() {
                 let treeZ = 0 + treeInterval * j
                 let tree = platonicTree.clone()
                 tree.name = 'Tree ' + i + ' ' + j
-                tree.position.x = treeX + addRandom(treeSpaceRandomizer)
-                tree.position.z = treeZ + addRandom(treeSpaceRandomizer)
-                tree.rotation.y += addRandom(7)
-                tree.scale.x = treeScale + addRandom(treeScaleRandomizer)
-                tree.scale.y = treeScale + addRandom(treeScaleRandomizer)
-                tree.scale.z = treeScale + addRandom(treeScaleRandomizer)
+                tree.position.x = treeX + ENGINE.UTILS.randomiseByRange(treeSpaceRandomizer)
+                tree.position.z = treeZ + ENGINE.UTILS.randomiseByRange(treeSpaceRandomizer)
+                tree.rotation.y += ENGINE.UTILS.randomiseByRange(7)
+                tree.scale.x = treeScale + ENGINE.UTILS.randomiseByRange(treeScaleRandomizer)
+                tree.scale.y = treeScale + ENGINE.UTILS.randomiseByRange(treeScaleRandomizer)
+                tree.scale.z = treeScale + ENGINE.UTILS.randomiseByRange(treeScaleRandomizer)
                 scene.add(tree)
             }
         }
     }
-
-    // Arch
-
-    // ENGINE.GLTFloader.load( 'dist/models/arch/scene.gltf', function(gltf){
-    //     scene.add(gltf.scene)
-    //     let arch = gltf.scene
-    //     arch.name = 'Arch'
-    //     arch.position.x = 200
-    //     arch.position.z = -1500
-    //     arch.position.y = 170
-    //     arch.scale.x = 80
-    //     arch.scale.y = 80
-    //     arch.scale.z = 80
-
-    // }, undefined, function(error){
-    //     console.error( error )
-    // })
 
     // Floor
 
@@ -82,11 +61,6 @@ function buildLevel() {
     // Sexy box
 
     const boxDimension = 100
-
-    // const boxTimesToRepeatHorizontally = boxDimension / 1000
-    // const boxTimesToRepeatVertically = boxDimension / 1000
-    // grassTexture.repeat.set(boxTimesToRepeatHorizontally, boxTimesToRepeatVertically)
-
 
     var boxGeometry = new THREE.BoxBufferGeometry(boxDimension, boxDimension, boxDimension)
     var boxMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
