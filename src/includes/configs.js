@@ -8,9 +8,6 @@ const configs = {
     fov: 75,
     nearPlane: 0.1,
 
-    fogStart: 500, // Old fog configs currently not is use
-    fogEnd: 2000,
-
     fogDensity: 0.0008,
 
     clearColour: 0x001c0c, // Scene background colour

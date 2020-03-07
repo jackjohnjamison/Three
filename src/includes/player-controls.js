@@ -9,11 +9,11 @@ let xVelocity = 0
 let zVelocity = 0
 
 let yVelocity = 0
+let canJump = false
 
 let deg90
 
-function pointerLock() {
-    document.body.requestPointerLock()
+function initPointerLock() {
     document.addEventListener('mousemove', event => {
         movementX = event.movementX
         movementY = event.movementY
@@ -29,16 +29,22 @@ function pointerLock() {
 }
 
 function jump() {
-    yVelocity += ENGINE.configs.jumpPower
+    if(canJump) {
+        yVelocity += ENGINE.configs.jumpPower
+        canJump = false
+    }
 }
 
 function initPlayerControls() {
     deg90 = ENGINE.UTILS.degreesToRadians(90)
 
+    initPointerLock()
+
     document.addEventListener('keydown', event => {
         switch(event.keyCode) {
             case 13:
-                pointerLock()
+                document.body.requestPointerLock()
+                document.body.requestFullscreen()
                 break
             case 32:
                 jump()
@@ -49,6 +55,14 @@ function initPlayerControls() {
 
 
 function playerControls(configs, player, camera) {
+
+    if(pointerLocked && timeStamp !== timeStampPrev) {
+        player.rotation.y -= movementX * configs.lookSensitivity
+        camera.rotation.x -= movementY * configs.lookSensitivity
+
+        camera.rotation.x = Math.max(Math.min(camera.rotation.x, deg90), -deg90)
+    }
+    timeStampPrev = timeStamp
 
     const arrowForward = ENGINE.KEYCHECK(87)
     const arrowBack = ENGINE.KEYCHECK(83)
@@ -66,17 +80,6 @@ function playerControls(configs, player, camera) {
     
     player.position.x += xVelocity
     player.position.z += zVelocity
-
-
-
-    
-    if(pointerLocked && timeStamp !== timeStampPrev) {
-        player.rotation.y -= movementX * configs.lookSensitivity
-        camera.rotation.x -= movementY * configs.lookSensitivity
-
-        camera.rotation.x = Math.max(Math.min(camera.rotation.x, deg90), -deg90)
-    }
-    timeStampPrev = timeStamp
     
     zVelocity *= configs.friction
     xVelocity *= configs.friction
@@ -84,10 +87,10 @@ function playerControls(configs, player, camera) {
     yVelocity -= configs.gravity
     player.position.y += yVelocity
     
-    
     if (player.position.y < ENGINE.configs.playerHeight) {
         yVelocity = 0
         player.position.y = ENGINE.configs.playerHeight
+        canJump = true
     }
 }
 
