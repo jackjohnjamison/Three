@@ -15,10 +15,39 @@ function initHud() {
 
         pauseScreen: {
             position: 'absolute',
-            top: 0,
+            top: '0',
+            width: '100%',
+            height: '100%',
+            background: 'rgba(235, 94, 52, 0.3)',
+            display: 'none'
+        },
+
+        pauseText: {
+            position: 'absolute',
+            top: '40vh',
+            color: '#fff',
+            width: '100%',
+            'font-family': '"Courier New", Courier, monospace',
+            'font-size': '10vh',
+            'text-align': 'center'
+        },
+
+        startScreen: {
+            position: 'absolute',
+            top: '0',
             width: '100%',
             height: '100%',
             background: 'rgba(235, 94, 52, 0.3)'
+        },
+
+        startText: {
+            position: 'absolute',
+            top: '10vh',
+            color: '#fff',
+            width: '100%',
+            'font-family': '"Courier New", Courier, monospace',
+            'font-size': '10vh',
+            'text-align': 'center'
         }
     }
 
@@ -26,14 +55,21 @@ function initHud() {
 
     ENGINE.hud = {}
 
-    ENGINE.hud.main = document.createElement('div')
-    ENGINE.STYLER.setStyle(styles.hud, ENGINE.hud.main)
+    ENGINE.hud.main = ENGINE.STYLER.createElement('div', styles.hud)
 
-    ENGINE.hud.pauseScreen = document.createElement('div')
-    ENGINE.STYLER.setStyle(styles.pauseScreen, ENGINE.hud.pauseScreen)
-    
+
+    ENGINE.hud.startScreen = ENGINE.STYLER.createElement('div', styles.startScreen)
+    let startText = ENGINE.STYLER.createElement('div', styles.startText)
+    startText.innerHTML = '[ PRESS ENTER TO START ]'
+    ENGINE.hud.main.appendChild(ENGINE.hud.startScreen)
+    ENGINE.hud.startScreen.appendChild(startText)
+
+
+    ENGINE.hud.pauseScreen = ENGINE.STYLER.createElement('div', styles.pauseScreen)
+    let pauseText = ENGINE.STYLER.createElement('div', styles.pauseText)
+    pauseText.innerHTML = '[ PAUSED ]'
     ENGINE.hud.main.appendChild(ENGINE.hud.pauseScreen)
-    
+    ENGINE.hud.pauseScreen.appendChild(pauseText)
 
     document.body.appendChild(ENGINE.hud.main)
 }

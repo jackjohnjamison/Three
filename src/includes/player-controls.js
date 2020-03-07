@@ -21,8 +21,10 @@ function initPointerLock() {
         timeStamp = event.timeStamp
     })
 
-    document.addEventListener('pointerlockchange', function() {
+    document.addEventListener('pointerlockchange', function() { // This function runs on the ESC key being pressed.
         if(!document.pointerLockElement) {
+            ENGINE.renderer.setSize(innerWidth, innerHeight)
+            ENGINE.camera.updateProjectionMatrix()
             pause()
         }
     })
@@ -38,12 +40,15 @@ function unpause() {
     ENGINE.isPaused = false
     document.body.requestPointerLock()
     ENGINE.hud.pauseScreen.style.display = 'none'
+    ENGINE.hud.startScreen.style.display = 'none'
     animate()
 }
 
 function fullscreen() {
     if(!document.body.fullscreenElement) {
         document.body.requestFullscreen()
+        ENGINE.renderer.setSize(screen.width, screen.height)
+        ENGINE.camera.updateProjectionMatrix()
     }
 }
 
