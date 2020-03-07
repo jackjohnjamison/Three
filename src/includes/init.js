@@ -4,7 +4,7 @@ import { KEYCHECK } from './key-check.js'
 import * as UTILS from './utils.js'
 import GLTFLoader from 'three-gltf-loader'
 import { initSettings } from './settings.js'
-import { initHud } from './hud.js'
+import { initHud } from './ui.js'
 import { STYLER } from './css-styler.js'
 
 function initEngine() {

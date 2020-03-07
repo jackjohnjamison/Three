@@ -33,14 +33,16 @@ function initPointerLock() {
 function pause() {
     ENGINE.isPaused = true
     cancelAnimationFrame(ENGINE.renderLoop)
-    ENGINE.hud.pauseScreen.style.display = 'block'
+    ENGINE.UI.pauseScreen.style.display = 'block'
+    ENGINE.UI.hud.style.display = 'none'
 }
 
 function unpause() {
     ENGINE.isPaused = false
     document.body.requestPointerLock()
-    ENGINE.hud.pauseScreen.style.display = 'none'
-    ENGINE.hud.startScreen.style.display = 'none'
+    ENGINE.UI.pauseScreen.style.display = 'none'
+    ENGINE.UI.startScreen.style.display = 'none'
+    ENGINE.UI.hud.style.display = 'block'
     animate()
 }
 
