@@ -1,9 +1,10 @@
+import { animate } from './game-loop.js'
+
 let movementX = 0
 let movementY = 0
 
 let timeStamp = 0
 let timeStampPrev = 0
-let pointerLocked = false
 
 let xVelocity = 0
 let zVelocity = 0
@@ -19,13 +20,31 @@ function initPointerLock() {
         movementY = event.movementY
         timeStamp = event.timeStamp
     })
+
     document.addEventListener('pointerlockchange', function() {
-        if(document.pointerLockElement) {
-            pointerLocked = true
-        } else {
-            pointerLocked = false
+        if(!document.pointerLockElement) {
+            pause()
         }
     })
+}
+
+function pause() {
+    ENGINE.isPaused = true
+    cancelAnimationFrame(ENGINE.renderLoop)
+    ENGINE.hud.pauseScreen.style.display = 'block'
+}
+
+function unpause() {
+    ENGINE.isPaused = false
+    document.body.requestPointerLock()
+    ENGINE.hud.pauseScreen.style.display = 'none'
+    animate()
+}
+
+function fullscreen() {
+    if(!document.body.fullscreenElement) {
+        document.body.requestFullscreen()
+    }
 }
 
 function jump() {
@@ -43,11 +62,13 @@ function initPlayerControls() {
     document.addEventListener('keydown', event => {
         switch(event.keyCode) {
             case 13:
-                document.body.requestPointerLock()
-                document.body.requestFullscreen()
+                unpause()
                 break
             case 32:
                 jump()
+                break
+            case 112:
+                fullscreen()
                 break
         }
     })
@@ -56,7 +77,7 @@ function initPlayerControls() {
 
 function playerControls(configs, player, camera) {
 
-    if(pointerLocked && timeStamp !== timeStampPrev) {
+    if(timeStamp !== timeStampPrev) {
         player.rotation.y -= movementX * configs.lookSensitivity
         camera.rotation.x -= movementY * configs.lookSensitivity
 

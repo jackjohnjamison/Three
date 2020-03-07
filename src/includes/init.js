@@ -20,6 +20,7 @@ function initEngine() {
         KEYCHECK: KEYCHECK,
         UTILS: UTILS,
         STYLER: STYLER,
+        isPaused: true,
         GLTFloader: new GLTFLoader(),
         renderer: new THREE.WebGLRenderer({antialias: true})
     }
@@ -32,8 +33,6 @@ function initEngine() {
     configs.parentElemnt.append(ENGINE.renderer.domElement)
 
     initHud()
-
-    
 }
 
 export { initEngine }

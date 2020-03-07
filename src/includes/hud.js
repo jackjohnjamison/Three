@@ -11,16 +11,31 @@ function initHud() {
             top: 0,
             width: '100%',
             height: '100%',
+        },
+
+        pauseScreen: {
+            position: 'absolute',
+            top: 0,
+            width: '100%',
+            height: '100%',
             background: 'rgba(235, 94, 52, 0.3)'
         }
     }
 
-    const hud = document.createElement('div')
-
     ENGINE.STYLER.applyBodyStyle(styles.body)
-    ENGINE.STYLER.setStyle(styles.hud, hud)
 
-    document.body.appendChild(hud)
+    ENGINE.hud = {}
+
+    ENGINE.hud.main = document.createElement('div')
+    ENGINE.STYLER.setStyle(styles.hud, ENGINE.hud.main)
+
+    ENGINE.hud.pauseScreen = document.createElement('div')
+    ENGINE.STYLER.setStyle(styles.pauseScreen, ENGINE.hud.pauseScreen)
+    
+    ENGINE.hud.main.appendChild(ENGINE.hud.pauseScreen)
+    
+
+    document.body.appendChild(ENGINE.hud.main)
 }
 
 export { initHud }
