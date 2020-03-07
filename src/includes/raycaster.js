@@ -19,16 +19,17 @@ function initRays() {
 
     window.addEventListener( 'click', function() {
 
-        if(hitLocations[0]) {
-            let firstHitLocation = hitLocations[0].point
-            ENGINE.UTILS.drawLine(playerPos, firstHitLocation, materialBlue)
+        if(!ENGINE.isPaused) {
+            if(hitLocations[0]) {
+                let firstHitLocation = hitLocations[0].point
+                ENGINE.UTILS.drawLine(playerPos, firstHitLocation, materialBlue)
+            }
+    
+            if(intersectsDown[0]) {
+                let groundCollison = intersectsDown[0].point
+                ENGINE.UTILS.drawLine(playerPos, groundCollison, materialRed)
+            }
         }
-
-        if(intersectsDown[0]) {
-            let groundCollison = intersectsDown[0].point
-            ENGINE.UTILS.drawLine(playerPos, groundCollison, materialRed)
-        }
-        
     }, false )
 }
 

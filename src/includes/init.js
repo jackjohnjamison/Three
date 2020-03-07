@@ -4,6 +4,8 @@ import { KEYCHECK } from './key-check.js'
 import * as UTILS from './utils.js'
 import GLTFLoader from 'three-gltf-loader'
 import { initSettings } from './settings.js'
+import { initHud } from './ui.js'
+import { STYLER } from './css-styler.js'
 
 function initEngine() {
 
@@ -17,6 +19,8 @@ function initEngine() {
         configs: configs,
         KEYCHECK: KEYCHECK,
         UTILS: UTILS,
+        STYLER: STYLER,
+        isPaused: true,
         GLTFloader: new GLTFLoader(),
         renderer: new THREE.WebGLRenderer({antialias: true})
     }
@@ -25,7 +29,10 @@ function initEngine() {
 
     ENGINE.renderer.setSize(configs.screenWidth, configs.screenHeight)
     ENGINE.renderer.setClearColor(configs.clearColour)
+
     configs.parentElemnt.append(ENGINE.renderer.domElement)
+
+    initHud()
 }
 
 export { initEngine }
