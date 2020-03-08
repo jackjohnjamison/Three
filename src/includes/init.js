@@ -6,6 +6,7 @@ import GLTFLoader from 'three-gltf-loader'
 import { initSettings } from './settings.js'
 import { initHud } from './ui.js'
 import { STYLER } from './css-styler.js'
+import { collisions } from './collisions.js'
 
 function initEngine() {
 
@@ -22,7 +23,8 @@ function initEngine() {
         STYLER: STYLER,
         isPaused: true,
         GLTFloader: new GLTFLoader(),
-        renderer: new THREE.WebGLRenderer({antialias: true})
+        renderer: new THREE.WebGLRenderer({antialias: true}),
+        collisions: collisions
     }
 
     window.gameSettings = initSettings()

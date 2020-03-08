@@ -62,15 +62,34 @@ function buildLevel() {
 
     const boxDimension = 100
 
-    var boxGeometry = new THREE.BoxBufferGeometry(boxDimension, boxDimension, boxDimension)
-    var boxMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
-    var box = new THREE.Mesh( boxGeometry, boxMaterial )
+    let boxGeometry = new THREE.BoxBufferGeometry(boxDimension, boxDimension, boxDimension)
+    let boxMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
+    let box = new THREE.Mesh( boxGeometry, boxMaterial )
     box.name = 'Sexy box'
 
     box.position.z = -1500
     box.position.y = boxDimension / 2
     
     scene.add(box)
+
+    ENGINE.collisions.collisionObjects.push(box)
+
+    // Sexy ramp
+
+    const rampDimension = 500
+
+    let rampGeometry = new THREE.BoxBufferGeometry(rampDimension, rampDimension, rampDimension)
+    let rampMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
+    let ramp = new THREE.Mesh( rampGeometry, rampMaterial )
+    ramp.name = 'Sexy ramp'
+
+    ramp.position.z = -2000
+    ramp.rotation.y = 0.785398
+    ramp.rotation.z = 0.785398
+    
+    scene.add(ramp)
+
+    ENGINE.collisions.collisionObjects.push(ramp)
 
 
     //////////////////////////////////////////////////////////////

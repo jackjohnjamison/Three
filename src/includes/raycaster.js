@@ -3,13 +3,13 @@ let downRay
 let intersectsDown
 let hitLocations = []
 let screenCenter = {x: 0, y: 0}
-let down
-let playerPos
+let downAngle
+let viewPos
 
 
 function initRays() {
-    down = new THREE.Vector3(0, ENGINE.UTILS.degreesToRadians(-90), 0).normalize()
-    playerPos = new THREE.Vector3()
+    downAngle = new THREE.Vector3(0, ENGINE.UTILS.degreesToRadians(-90), 0).normalize()
+    viewPos = new THREE.Vector3()
 
     raycaster = new THREE.Raycaster()
     downRay = new THREE.Raycaster()
@@ -22,12 +22,12 @@ function initRays() {
         if(!ENGINE.isPaused) {
             if(hitLocations[0]) {
                 let firstHitLocation = hitLocations[0].point
-                ENGINE.UTILS.drawLine(playerPos, firstHitLocation, materialBlue)
+                ENGINE.UTILS.drawLine(viewPos, firstHitLocation, materialBlue)
             }
     
             if(intersectsDown[0]) {
                 let groundCollison = intersectsDown[0].point
-                ENGINE.UTILS.drawLine(playerPos, groundCollison, materialRed)
+                ENGINE.UTILS.drawLine(viewPos, groundCollison, materialRed)
             }
         }
     }, false )
@@ -37,13 +37,19 @@ function initRays() {
 function findRayCollisions() {
     raycaster.setFromCamera( screenCenter, ENGINE.camera )
 
-    playerPos.set(ENGINE.player.position.x, ENGINE.player.position.y -10, ENGINE.player.position.z)
+    viewPos.set(ENGINE.player.position.x, (ENGINE.camera.position.y -10 + ENGINE.player.position.y), ENGINE.player.position.z)
 
-    downRay.set(playerPos, down)
+    downRay.set(viewPos, downAngle)
 
     hitLocations = raycaster.intersectObjects( scene.children )
 
-    intersectsDown = downRay.intersectObjects( scene.children )
+    intersectsDown = downRay.intersectObjects( ENGINE.collisions.collisionObjects )
+
+    if(intersectsDown[0]) {
+        ENGINE.collisions.downCollisionPoint = intersectsDown[0].point.y
+    } else {
+        ENGINE.collisions.downCollisionPoint = 0
+    }
 }
 
 export { initRays, findRayCollisions }

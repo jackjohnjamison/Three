@@ -8,9 +8,12 @@ function initPlayer() {
     const camera = ENGINE.camera = new THREE.PerspectiveCamera( configs.fov, configs.screenWidth/configs.screenHeight, configs.nearPlane, configs.viewDistance)
     camera.name = 'Player view'
     player.add(camera)
+
+    camera.position.y = ENGINE.configs.playerHeight
+
     scene.add(player)
     player.position.z = -1000
-    player.position.y = ENGINE.configs.playerHeight
+    player.position.y = 0 //ENGINE.configs.playerHeight
     player.rotation.y = 3
     
     ENGINE.GLTFloader.load( 'dist/models/fn2000/scene.gltf', function(gltf){

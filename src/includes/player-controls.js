@@ -115,10 +115,12 @@ function playerControls(configs, player, camera) {
 
     yVelocity -= configs.gravity
     player.position.y += yVelocity
+
+    let groundCollisionsPoint = Math.max(0, ENGINE.collisions.downCollisionPoint)
     
-    if (player.position.y < ENGINE.configs.playerHeight) {
+    if (player.position.y < groundCollisionsPoint) {
         yVelocity = 0
-        player.position.y = ENGINE.configs.playerHeight
+        player.position.y = groundCollisionsPoint
         canJump = true
     }
 }
