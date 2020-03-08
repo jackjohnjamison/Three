@@ -1,4 +1,4 @@
-let raycaster
+let balisticRay
 let downRay
 let intersectsDown
 let hitLocations = []
@@ -11,7 +11,7 @@ function initRays() {
     downAngle = new THREE.Vector3(0, ENGINE.UTILS.degreesToRadians(-90), 0).normalize()
     viewPos = new THREE.Vector3()
 
-    raycaster = new THREE.Raycaster()
+    balisticRay = new THREE.Raycaster()
     downRay = new THREE.Raycaster()
 
     let materialBlue = new THREE.LineBasicMaterial( { color: 0x0000ff } )
@@ -20,6 +20,9 @@ function initRays() {
     window.addEventListener( 'click', function() {
 
         if(!ENGINE.isPaused) {
+            balisticRay.setFromCamera( screenCenter, ENGINE.camera )
+            hitLocations = balisticRay.intersectObjects( ENGINE.collisions.targetObjects )
+
             if(hitLocations[0]) {
                 let firstHitLocation = hitLocations[0].point
                 ENGINE.UTILS.drawLine(viewPos, firstHitLocation, materialBlue)
@@ -33,18 +36,15 @@ function initRays() {
     }, false )
 }
 
-
 function findRayCollisions() {
-    raycaster.setFromCamera( screenCenter, ENGINE.camera )
+    const viewPosY = ENGINE.camera.position.y + ENGINE.configs.viewOffsetY + ENGINE.player.position.y
+    viewPos.set(ENGINE.player.position.x, viewPosY, ENGINE.player.position.z)
 
-    viewPos.set(ENGINE.player.position.x, (ENGINE.camera.position.y -10 + ENGINE.player.position.y), ENGINE.player.position.z)
-
-    downRay.set(viewPos, downAngle)
-
-    hitLocations = raycaster.intersectObjects( scene.children )
+    downRay.set(viewPos, downAngle)    
 
     intersectsDown = downRay.intersectObjects( ENGINE.collisions.collisionObjects )
 
+    
     if(intersectsDown[0]) {
         ENGINE.collisions.downCollisionPoint = intersectsDown[0].point.y
     } else {

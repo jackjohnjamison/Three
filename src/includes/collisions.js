@@ -1,5 +1,6 @@
 const collisions = {
     collisionObjects: [],
+    targetObjects: [],
     downCollisionPoint: 0,
 }
 

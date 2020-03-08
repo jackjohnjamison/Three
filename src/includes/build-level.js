@@ -3,22 +3,27 @@ function buildLevel() {
     // Floor
 
     const texLoader = new THREE.TextureLoader()
-    const floorXDimension = 100000
-    const floorZDimension = 100000
+    const floorDimensionX = 100000
+    const floorDimensionZ = 100000
 
     const grassTexture = texLoader.load('dist/images/grass2.jpg')
     grassTexture.wrapS = THREE.RepeatWrapping
     grassTexture.wrapT = THREE.RepeatWrapping
 
-    const timesToRepeatHorizontally = floorXDimension / 1000
-    const timesToRepeatVertically = floorZDimension / 1000
+    const timesToRepeatHorizontally = floorDimensionX / 1000
+    const timesToRepeatVertically = floorDimensionZ / 1000
     grassTexture.repeat.set(timesToRepeatHorizontally, timesToRepeatVertically)
 
-    var floorGeometry = new THREE.BoxBufferGeometry(floorXDimension, 0, floorZDimension)
-    var floorMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
+    var floorGeometry = new THREE.PlaneGeometry(floorDimensionX, floorDimensionZ)
+    var floorMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30, side: THREE.DoubleSide } )
     var floor = new THREE.Mesh( floorGeometry, floorMaterial )
     floor.name = 'Floor'
+
+    floor.rotation.x = 1.5708
     
+    console.log(floor)
+    
+    ENGINE.collisions.targetObjects.push(floor)
     scene.add(floor)
 
         // Tree printer
@@ -76,6 +81,7 @@ function buildLevel() {
     scene.add(box)
 
     ENGINE.collisions.collisionObjects.push(box)
+    ENGINE.collisions.targetObjects.push(box)
 
     // Sexy ramp
 
@@ -93,6 +99,7 @@ function buildLevel() {
     scene.add(ramp)
 
     ENGINE.collisions.collisionObjects.push(ramp)
+    ENGINE.collisions.targetObjects.push(ramp)
 
 
     //////////////////////////////////////////////////////////////
