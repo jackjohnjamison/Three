@@ -49,7 +49,7 @@ function unpause() {
 function fullscreen() {
     if(!document.body.fullscreenElement) {
         document.body.requestFullscreen()
-        ENGINE.renderer.setSize(screen.width, screen.height)
+        ENGINE.renderer.setSize(innerWidth, screen.height)
         ENGINE.camera.updateProjectionMatrix()
     }
 }
@@ -78,7 +78,7 @@ function initPlayerControls() {
                 fullscreen()
                 break
         }
-        ENGINE.UI.hud.keyCodeDisplay.innerHTML = event.keyCode
+        ENGINE.UI.hud.keyCodeDisplay.innerHTML = 'keycode ' + event.keyCode
     })
 }
 

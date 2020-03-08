@@ -18,7 +18,7 @@ function initHud() {
 
     ENGINE.UI.pauseScreen = ENGINE.STYLER.createElement('div', styles.pauseScreen)
     let pauseText = ENGINE.STYLER.createElement('div', styles.pauseText)
-    pauseText.innerHTML = '[ PAUSED ]'
+    pauseText.innerHTML = '[ paused ]'
     ENGINE.UI.main.appendChild(ENGINE.UI.pauseScreen)
     ENGINE.UI.pauseScreen.appendChild(pauseText)
 
