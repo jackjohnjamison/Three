@@ -34,12 +34,14 @@ function buildLevel() {
 
     // Sexy box
 
-    const box = cuboid()
-    
-    scene.add(box)
+    const box = new cuboid()
 
-    ENGINE.collisions.collisionObjects.push(box)
-    ENGINE.collisions.targetObjects.push(box)
+    console.log(box.box)
+    
+    scene.add(box.box)
+
+    ENGINE.collisions.collisionObjects.push(box.box)
+    ENGINE.collisions.targetObjects.push(box.box)
 
     // Sexy ramp
 
