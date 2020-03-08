@@ -78,6 +78,7 @@ function initPlayerControls() {
                 fullscreen()
                 break
         }
+        ENGINE.UI.hud.keyCodeDisplay.innerHTML = event.keyCode
     })
 }
 
