@@ -1,3 +1,5 @@
+import { makeForest } from './tree-printer.js'
+
 function buildLevel() {
 
     // Floor
@@ -21,50 +23,13 @@ function buildLevel() {
 
     floor.rotation.x = 1.5708
     
-    console.log(floor)
-    
     ENGINE.collisions.targetObjects.push(floor)
     scene.add(floor)
 
-        // Tree printer
 
-        const forest = new THREE.Object3D()
-        forest.name = forest
-
-        const treeRows = 10
-        const treeInterval = 900
-        const treeSpaceRandomizer = 550
-        const treeScaleRandomizer = 20
-        const treeScale = 30
-        
-    
-        ENGINE.GLTFloader.load( 'dist/models/tree/scene.gltf', function(gltf){
-            let platonicTree = gltf.scene
-            randomForest(platonicTree)
-        }, undefined, function(error){
-            console.error( error )
-        })
-    
-        function randomForest(platonicTree) {
-            for(let i = 0; i < treeRows; i++) {
-                let treeX = 0 + treeInterval * i
-    
-                for(let j = 0; j < treeRows; j++) {
-                    let treeZ = 0 + treeInterval * j
-                    let tree = platonicTree.clone()
-                    tree.name = 'Tree ' + i + ' ' + j
-                    tree.position.x = treeX + ENGINE.UTILS.randomiseByRange(treeSpaceRandomizer)
-                    tree.position.z = treeZ + ENGINE.UTILS.randomiseByRange(treeSpaceRandomizer)
-                    tree.rotation.y += ENGINE.UTILS.randomiseByRange(7)
-                    tree.scale.x = treeScale + ENGINE.UTILS.randomiseByRange(treeScaleRandomizer)
-                    tree.scale.y = treeScale + ENGINE.UTILS.randomiseByRange(treeScaleRandomizer)
-                    tree.scale.z = treeScale + ENGINE.UTILS.randomiseByRange(treeScaleRandomizer)
-                    forest.add(tree)
-                }
-            }
-        }
-
-        scene.add(forest)
+    // Make forest
+    const forest = makeForest(20, 900, 700, 30, 20)
+    scene.add(forest)
 
     // Sexy box
 

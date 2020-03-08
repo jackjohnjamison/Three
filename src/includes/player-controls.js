@@ -16,9 +16,11 @@ let deg90
 
 function initPointerLock() {
     document.addEventListener('mousemove', event => {
-        movementX = event.movementX
-        movementY = event.movementY
-        timeStamp = event.timeStamp
+        if(!ENGINE.isPaused) {
+            movementX = event.movementX
+            movementY = event.movementY
+            timeStamp = event.timeStamp
+        }
     })
 
     document.addEventListener('pointerlockchange', function() { // This function runs on the ESC key being pressed.
