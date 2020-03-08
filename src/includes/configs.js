@@ -6,7 +6,7 @@ const configs = {
 
     viewDistance: 2000,
     fov: 75,
-    nearPlane: 0.1,
+    nearPlane: 10, // I have no idea why but setting this higher resolved and issue with overlapping objects flickering
 
     fogDensity: 0.0008,
 
