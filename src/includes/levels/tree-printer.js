@@ -2,13 +2,6 @@ function makeForest(rows, interval, intervalDeviation, scale, scaleDeviation) {
     const forest = new THREE.Object3D()
     forest.name = forest
 
-    // // const rows = 10
-    // const interval = 900
-    // const intervalDeviation = 550
-    // const scaleDeviation = 20
-    // const scale = 30
-    
-
     ENGINE.GLTFloader.load( 'dist/models/tree/scene.gltf', function(gltf){
         let platonicTree = gltf.scene
         randomForest(platonicTree)

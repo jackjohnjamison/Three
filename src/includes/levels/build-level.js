@@ -1,4 +1,5 @@
 import { makeForest } from './tree-printer.js'
+import { cuboid } from './cuboids.js'
 
 function buildLevel() {
 
@@ -21,7 +22,7 @@ function buildLevel() {
     var floor = new THREE.Mesh( floorGeometry, floorMaterial )
     floor.name = 'Floor'
 
-    floor.rotation.x = 1.5708
+    floor.rotation.x = 1.5708 // 90 degrees in radians
     
     ENGINE.collisions.targetObjects.push(floor)
     scene.add(floor)
@@ -33,15 +34,7 @@ function buildLevel() {
 
     // Sexy box
 
-    const boxDimension = 100
-
-    let boxGeometry = new THREE.BoxBufferGeometry(boxDimension, boxDimension, boxDimension)
-    let boxMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
-    let box = new THREE.Mesh( boxGeometry, boxMaterial )
-    box.name = 'Sexy box'
-
-    box.position.z = -1500
-    box.position.y = boxDimension / 2
+    const box = cuboid()
     
     scene.add(box)
 
