@@ -46,9 +46,6 @@ function buildLevel() {
         collidable: true
     }) 
 
-    // scene.add(box)
-    // ENGINE.collisions.collisionObjects.push(box)
-    // ENGINE.collisions.targetObjects.push(box)
     console.log(box)
 
     // Sexy ramp

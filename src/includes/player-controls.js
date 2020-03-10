@@ -16,7 +16,7 @@ let deg90
 
 function initPointerLock() {
     document.addEventListener('mousemove', event => {
-        if(!ENGINE.isPaused) {
+        if(ENGINE.isPaused === false) {
             movementX = event.movementX
             movementY = event.movementY
             timeStamp = event.timeStamp
@@ -33,19 +33,23 @@ function initPointerLock() {
 }
 
 function pause() {
-    ENGINE.isPaused = true
-    cancelAnimationFrame(ENGINE.renderLoop)
-    ENGINE.UI.pauseScreen.style.display = 'block'
-    ENGINE.UI.hud.style.display = 'none'
+    if(ENGINE.isPaused === false) {
+        ENGINE.isPaused = true
+        cancelAnimationFrame(ENGINE.renderLoop)
+        ENGINE.UI.pauseScreen.style.display = 'block'
+        ENGINE.UI.hud.style.display = 'none'
+    }
 }
 
 function unpause() {
-    ENGINE.isPaused = false
-    document.body.requestPointerLock()
-    ENGINE.UI.pauseScreen.style.display = 'none'
-    ENGINE.UI.startScreen.style.display = 'none'
-    ENGINE.UI.hud.style.display = 'block'
-    animate()
+    if(ENGINE.isPaused === true) {
+        ENGINE.isPaused = false
+        document.body.requestPointerLock()
+        ENGINE.UI.pauseScreen.style.display = 'none'
+        ENGINE.UI.startScreen.style.display = 'none'
+        ENGINE.UI.hud.style.display = 'block'
+        animate()
+    }
 }
 
 function fullscreen() {
