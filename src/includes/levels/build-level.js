@@ -1,8 +1,9 @@
 import { makeForest } from './tree-printer.js'
-import { cuboid } from './cuboids.js'
+import { initCuboid } from './cuboids.js'
 
 function buildLevel() {
 
+    initCuboid()
     // Floor
 
     const texLoader = new THREE.TextureLoader()
@@ -34,14 +35,21 @@ function buildLevel() {
 
     // Sexy box
 
-    const box = new cuboid()
-
-    console.log(box.box)
     
-    scene.add(box.box)
+    const box = ENGINE.entities.cuboid({
+        name: 'Small box',
+        texture: 'dist/images/grass2.jpg',
+        dimensions: {x: 128, y: 128, z: 128},
+        position: {z: -1500, y: 64 },
+        addToScene: true,
+        target: true,
+        collidable: true 
+    }) 
 
-    ENGINE.collisions.collisionObjects.push(box.box)
-    ENGINE.collisions.targetObjects.push(box.box)
+    // scene.add(box)
+    // ENGINE.collisions.collisionObjects.push(box)
+    // ENGINE.collisions.targetObjects.push(box)
+    console.log(box)
 
     // Sexy ramp
 
@@ -57,6 +65,7 @@ function buildLevel() {
     ramp.rotation.z = 0.785398
     
     scene.add(ramp)
+    console.log(ramp)
 
     ENGINE.collisions.collisionObjects.push(ramp)
     ENGINE.collisions.targetObjects.push(ramp)

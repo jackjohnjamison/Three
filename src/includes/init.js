@@ -21,6 +21,7 @@ function initEngine() {
         KEYCHECK: KEYCHECK,
         UTILS: UTILS,
         STYLER: STYLER,
+        entities: {},
         isPaused: true,
         GLTFloader: new GLTFLoader(),
         renderer: new THREE.WebGLRenderer({antialias: true}),

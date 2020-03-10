@@ -1,26 +1,43 @@
-    class cuboid {
-        constructor() {
-            const texLoader = new THREE.TextureLoader()
-            const boxDimension = 128
+function initCuboid() {
+
+    const texLoader = new THREE.TextureLoader()
+
+    function cuboid(props = {}) {
+
+            let defaults = {
+                name: 'Unnamed',
+                ligma: 10
+            }
+
+            for (let property in props) {
+                defaults[property] = props[property]
+            }
+
+            console.log(defaults)
+
+            const textureRatio = ENGINE.configs.textureRatio
     
-            const boxTexture = texLoader.load('dist/images/grass2.jpg')
+            const texture = texLoader.load('dist/images/grass2.jpg')
             
-            const boxTimesToRepeatHorizontally = boxDimension / 128
-            const boxToRepeatVertically = boxDimension / 128
-            boxTexture.repeat.set(boxTimesToRepeatHorizontally, boxToRepeatVertically)
+            const textureRepetition = dimensions / textureRatio
+            texture.repeat.set(textureRepetition, textureRepetition)
             
-            let boxGeometry = new THREE.BoxBufferGeometry(boxDimension, boxDimension, boxDimension)
-            let boxMaterial = new THREE.MeshPhongMaterial( { map: boxTexture, shininess: 30 } )
+            let boxGeometry = new THREE.BoxBufferGeometry(dimensions, dimensions, dimensions)
+            let boxMaterial = new THREE.MeshPhongMaterial( { map: texture, shininess: 30 } )
             
             
-            this.box = new THREE.Mesh( boxGeometry, boxMaterial )
-            this.box.name = 'Sexy box'
-            
-            this.box.position.z = -1500
-            this.box.position.y = boxDimension / 2
+            const cube = new THREE.Mesh( boxGeometry, boxMaterial )
+            cube.name = name
+
+
+
+
+            return cube
         }
 
-    }
+    ENGINE.entities.cuboid = cuboid
+}
 
 
- export { cuboid }
+ export { initCuboid }
+

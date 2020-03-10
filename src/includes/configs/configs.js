@@ -9,9 +9,10 @@ const configs = {
     nearPlane: 10, // I have no idea why but setting this higher resolved an issue with overlapping objects flickering
 
     fogDensity: 0.0005,
-
     clearColour: 0x001c0c, // Scene background colour
     fogColour: 0x001c0c,
+
+    textureRatio: 128, // Textures are 128 x 128 so this is 1 pixel to 1 unit
 
     playerHeight: 200,
     viewOffsetY: -10,
