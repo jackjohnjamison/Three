@@ -11,14 +11,17 @@ let zVelocity = 0
 
 let yVelocity = 0
 let canJump = false
+let isPointerLocked = false
 
 let deg90
 
 function initPointerLock() {
     document.addEventListener('mousemove', event => {
-        if(ENGINE.isPaused === false) {
+        if(ENGINE.isPaused === false && isPointerLocked === true) {
             movementX = event.movementX
+            console.log(movementX)
             movementY = event.movementY
+            console.log(movementY)
             timeStamp = event.timeStamp
         }
     })
@@ -27,7 +30,10 @@ function initPointerLock() {
         if(!document.pointerLockElement) {
             ENGINE.renderer.setSize(innerWidth, innerHeight)
             ENGINE.camera.updateProjectionMatrix()
+            isPointerLocked = false
             pause()
+        } else {
+            isPointerLocked = true
         }
     })
 }
