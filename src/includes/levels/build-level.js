@@ -10,7 +10,7 @@ function buildLevel() {
     const floorDimensionX = 100000
     const floorDimensionZ = 100000
 
-    const grassTexture = texLoader.load('dist/images/grass2.jpg')
+    const grassTexture = texLoader.load('dist/images/grass.jpg')
     grassTexture.wrapS = THREE.RepeatWrapping
     grassTexture.wrapT = THREE.RepeatWrapping
 
@@ -38,12 +38,12 @@ function buildLevel() {
     
     const box = ENGINE.entities.cuboid({
         name: 'Small box',
-        texture: 'dist/images/grass2.jpg',
-        dimensions: {x: 128, y: 128, z: 128},
+        texture: 'dist/images/grass.jpg',
+        dimensions: {x: 128, y: 128, z: 256},
         position: {z: -1500, y: 64 },
         addToScene: true,
         target: true,
-        collidable: true 
+        collidable: true
     }) 
 
     // scene.add(box)

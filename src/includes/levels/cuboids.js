@@ -4,35 +4,47 @@ function initCuboid() {
 
     function cuboid(props = {}) {
 
-            let defaults = {
+            const objectProps = {
                 name: 'Unnamed',
-                ligma: 10
+                texture: 'dist/images/blank.jpg',
+                dimensions: {x: 128, y: 128, z: 128},
+                position: {z: 0, y: 0},
+                addToScene: false,
+                target: false,
+                collidable: false 
             }
 
             for (let property in props) {
-                defaults[property] = props[property]
+                objectProps[property] = props[property]
             }
-
-            console.log(defaults)
 
             const textureRatio = ENGINE.configs.textureRatio
     
-            const texture = texLoader.load('dist/images/grass2.jpg')
+            const texture = texLoader.load(objectProps.texture)
             
-            const textureRepetition = dimensions / textureRatio
-            texture.repeat.set(textureRepetition, textureRepetition)
+            const textureRepetitionX = objectProps.dimensions.x / textureRatio
+            const textureRepetitionY = objectProps.dimensions.y / textureRatio
+            const textureRepetitionZ = objectProps.dimensions.z / textureRatio
+
+            texture.repeat.set(textureRepetitionX, textureRepetitionX)
             
-            let boxGeometry = new THREE.BoxBufferGeometry(dimensions, dimensions, dimensions)
+            let boxGeometry = new THREE.BoxBufferGeometry(objectProps.dimensions.x, objectProps.dimensions.y, objectProps.dimensions.z)
             let boxMaterial = new THREE.MeshPhongMaterial( { map: texture, shininess: 30 } )
             
             
-            const cube = new THREE.Mesh( boxGeometry, boxMaterial )
-            cube.name = name
+            const cuboid = new THREE.Mesh( boxGeometry, boxMaterial )
 
+            if(objectProps.addToScene) {
+                scene.add(cuboid)
+            }
+            if(objectProps.target) {
+                ENGINE.collisions.collisionObjects.push(cuboid)              
+            }
+            if(objectProps.collidable) {
+                ENGINE.collisions.targetObjects.push(cuboid)
+            }
 
-
-
-            return cube
+            return cuboid
         }
 
     ENGINE.entities.cuboid = cuboid
