@@ -18,38 +18,31 @@ function initCuboid() {
                 objectProps[property] = props[property]
             }
 
-            //////////////////////////////////////////////////////////////////////////////////////////
             const textureRatio = ENGINE.configs.textureRatio
-    
-            const texture1 = texLoader.load(objectProps.texture)
-            texture1.wrapS = texture1.wrapT = THREE.RepeatWrapping
-            const texture1RepetitionU = objectProps.dimensions.z / textureRatio
-            const texture1RepetitionV = objectProps.dimensions.y / textureRatio
-            texture1.repeat.set(texture1RepetitionU, texture1RepetitionV)
 
-            const texture2 = texLoader.load(objectProps.texture)
-            texture2.wrapS = texture2.wrapT = THREE.RepeatWrapping
-            const texture2RepetitionU = objectProps.dimensions.x / textureRatio
-            const texture2RepetitionV = objectProps.dimensions.z / textureRatio
-            texture2.repeat.set(texture2RepetitionU, texture2RepetitionV)
+            function initTexture(width, height) {
+                const texture = texLoader.load(objectProps.texture)
+                texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+                const textureRepetitionU = width / textureRatio
+                const textureRepetitionV = height / textureRatio
+                texture.repeat.set(textureRepetitionU, textureRepetitionV)
+                return texture
+            }
 
-            const texture3 = texLoader.load(objectProps.texture)
-            texture3.wrapS = texture3.wrapT = THREE.RepeatWrapping
-            const texture3RepetitionU = objectProps.dimensions.x / textureRatio
-            const texture3RepetitionV = objectProps.dimensions.y / textureRatio
-            texture3.repeat.set(texture3RepetitionU, texture3RepetitionV)
+            const textureX = initTexture(objectProps.dimensions.z, objectProps.dimensions.y)
+            const textureY = initTexture(objectProps.dimensions.x, objectProps.dimensions.z)
+            const textureZ = initTexture(objectProps.dimensions.x, objectProps.dimensions.y)
+
             
             let boxGeometry = new THREE.BoxBufferGeometry(objectProps.dimensions.x, objectProps.dimensions.y, objectProps.dimensions.z)
             let boxMaterials = [ 
-                new THREE.MeshPhongMaterial( { map: texture1, shininess: 30, color: 0xff0000 }),
-                new THREE.MeshPhongMaterial( { map: texture1, shininess: 30, color: 0xff0000 }),
-                new THREE.MeshPhongMaterial( { map: texture2, shininess: 30, color: 0x00ff00 }),
-                new THREE.MeshPhongMaterial( { map: texture2, shininess: 30, color: 0x00ff00 }),
-                new THREE.MeshPhongMaterial( { map: texture3, shininess: 30, color: 0x0000ff }),
-                new THREE.MeshPhongMaterial( { map: texture3, shininess: 30, color: 0x0000ff })
+                new THREE.MeshPhongMaterial( { map: textureX, shininess: 30, color: 0xff0000 }),
+                new THREE.MeshPhongMaterial( { map: textureX, shininess: 30, color: 0xff0000 }),
+                new THREE.MeshPhongMaterial( { map: textureY, shininess: 30, color: 0x00ff00 }),
+                new THREE.MeshPhongMaterial( { map: textureY, shininess: 30, color: 0x00ff00 }),
+                new THREE.MeshPhongMaterial( { map: textureZ, shininess: 30, color: 0x0000ff }),
+                new THREE.MeshPhongMaterial( { map: textureZ, shininess: 30, color: 0x0000ff })
             ]
-            
-            console.log(boxMaterials)
             
             const cuboid = new THREE.Mesh( boxGeometry, boxMaterials )
 
@@ -72,7 +65,6 @@ function initCuboid() {
 
     ENGINE.entities.cuboid = cuboid
 }
-
 
  export { initCuboid }
 
