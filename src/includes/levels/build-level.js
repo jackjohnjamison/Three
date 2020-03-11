@@ -37,7 +37,7 @@ function buildLevel() {
 
     const box = ENGINE.entities.cuboid({
         name: 'Small box',
-        texture: 'dist/images/grass.jpg',
+        texture: 'dist/images/map.png',
         dimensions: {x: 128, y: 128, z: 256},
         position: {x: 0, z: -1500, y: 64 },
         addToScene: true,
@@ -49,8 +49,8 @@ function buildLevel() {
 
     const ramp = ENGINE.entities.cuboid({
         name: 'Sexy ramp',
-        texture: 'dist/images/grass.jpg',
-        dimensions: {x: 512, y: 512, z: 512},
+        texture: 'dist/images/map.png',
+        dimensions: {x: 512, y: 1024, z: 256},
         position: {x: 0, z: -2000, y: 0 },
         addToScene: true,
         target: true,
