@@ -35,38 +35,30 @@ function buildLevel() {
 
     // Sexy box
 
-    
     const box = ENGINE.entities.cuboid({
         name: 'Small box',
         texture: 'dist/images/grass.jpg',
         dimensions: {x: 128, y: 128, z: 256},
-        position: {z: -1500, y: 64 },
+        position: {x: 0, z: -1500, y: 64 },
         addToScene: true,
         target: true,
         collidable: true
     }) 
 
-    console.log(box)
-
     // Sexy ramp
 
-    const rampDimension = 500
+    const ramp = ENGINE.entities.cuboid({
+        name: 'Sexy ramp',
+        texture: 'dist/images/grass.jpg',
+        dimensions: {x: 512, y: 512, z: 512},
+        position: {x: 0, z: -2000, y: 0 },
+        addToScene: true,
+        target: true,
+        collidable: true
+    }) 
 
-    let rampGeometry = new THREE.BoxBufferGeometry(rampDimension, rampDimension, rampDimension)
-    let rampMaterial = new THREE.MeshPhongMaterial( { map: grassTexture, shininess: 30 } )
-    let ramp = new THREE.Mesh( rampGeometry, rampMaterial )
-    ramp.name = 'Sexy ramp'
-
-    ramp.position.z = -2000
     ramp.rotation.y = 0.785398
     ramp.rotation.z = 0.785398
-    
-    scene.add(ramp)
-    console.log(ramp)
-
-    ENGINE.collisions.collisionObjects.push(ramp)
-    ENGINE.collisions.targetObjects.push(ramp)
-
 
     //////////////////////////////////////////////////////////////
     ///   Lights

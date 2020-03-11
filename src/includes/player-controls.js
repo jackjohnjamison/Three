@@ -17,11 +17,9 @@ let deg90
 
 function initPointerLock() {
     document.addEventListener('mousemove', event => {
-        if(ENGINE.isPaused === false && isPointerLocked === true) {
+        if(isPointerLocked === true) {
             movementX = event.movementX
-            console.log(movementX)
             movementY = event.movementY
-            console.log(movementY)
             timeStamp = event.timeStamp
         }
     })

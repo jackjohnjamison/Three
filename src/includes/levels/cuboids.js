@@ -8,7 +8,7 @@ function initCuboid() {
                 name: 'Unnamed',
                 texture: 'dist/images/blank.jpg',
                 dimensions: {x: 128, y: 128, z: 128},
-                position: {z: 0, y: 0},
+                position: {x: 0, z: 0, y: 0},
                 addToScene: false,
                 target: false,
                 collidable: false 
@@ -33,6 +33,10 @@ function initCuboid() {
             
             
             const cuboid = new THREE.Mesh( boxGeometry, boxMaterial )
+
+            cuboid.position.x = objectProps.position.x
+            cuboid.position.y = objectProps.position.y
+            cuboid.position.z = objectProps.position.z
 
             if(objectProps.addToScene) {
                 scene.add(cuboid)
