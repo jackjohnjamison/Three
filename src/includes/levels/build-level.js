@@ -10,7 +10,7 @@ function buildLevel() {
     const floorDimensionX = 100000
     const floorDimensionZ = 100000
 
-    const grassTexture = texLoader.load('dist/images/grass.jpg')
+    const grassTexture = texLoader.load('assets/dist/three-js-fps/images/grass.jpg')
     grassTexture.wrapS = THREE.RepeatWrapping
     grassTexture.wrapT = THREE.RepeatWrapping
 
@@ -37,7 +37,7 @@ function buildLevel() {
 
     const box = ENGINE.entities.cuboid({
         name: 'Small box',
-        texture: 'dist/images/map.png',
+        texture: 'assets/dist/three-js-fps/images/map.png',
         dimensions: {x: 256, y: 128, z: 64},
         position: {x: 0, z: -1500, y: 64 },
         addToScene: true,
@@ -49,7 +49,7 @@ function buildLevel() {
 
     const ramp = ENGINE.entities.cuboid({
         name: 'Sexy ramp',
-        texture: 'dist/images/map.png',
+        texture: 'assets/dist/three-js-fps/images/map.png',
         dimensions: {x: 1024, y: 512, z: 256},
         position: {x: 0, z: -2000, y: 0 },
         addToScene: true,

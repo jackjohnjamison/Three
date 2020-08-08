@@ -6,7 +6,7 @@ function initCuboid() {
 
             const objectProps = {
                 name: 'Unnamed',
-                texture: 'dist/images/blank.jpg',
+                texture: 'assets/dist/three-js-fps/images/blank.jpg',
                 dimensions: {x: 128, y: 128, z: 128},
                 position: {x: 0, z: 0, y: 0},
                 addToScene: false,

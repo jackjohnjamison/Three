@@ -16,7 +16,7 @@ function initPlayer() {
     player.position.y = 0 //ENGINE.configs.playerHeight
     player.rotation.y = 3
     
-    ENGINE.GLTFloader.load( 'dist/models/fn2000/scene.gltf', function(gltf){
+    ENGINE.GLTFloader.load( 'assets/dist/three-js-fps/models/fn2000/scene.gltf', function(gltf){
         camera.add(gltf.scene)
         let rightHand = gltf.scene
         rightHand.name = 'Right hand'
